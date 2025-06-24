@@ -1,0 +1,16 @@
+.listContainer {
+  order: 2;
+  padding: 1rem;
+  width: 100%;
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .pagination {
+    margin-top: 1rem;
+    text-align: center;
+  }
+}

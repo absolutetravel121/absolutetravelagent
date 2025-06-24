@@ -1,9 +1,14 @@
- 
+import LoginDone from "@/components/loginDone/LoginDone";
+import Login from "./login/page";
+import SignUp from "./signUp/page";
 
 export default function Home() {
   return (
-    <div  >
-    <h1>Welcome to My absolute travel agent portal</h1>
-    </div>
+    <>
+      {/* <TravelPartner /> */}
+      {/* <LoginDone /> */}
+      <Login />
+      {/* <SignUp /> */}
+    </>
   );
 }

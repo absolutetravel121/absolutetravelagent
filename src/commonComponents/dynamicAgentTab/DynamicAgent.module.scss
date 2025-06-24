@@ -1,0 +1,79 @@
+@use "../../assets/styles/variable.scss" as *;
+@use "../../assets/styles/mixin.scss" as *;
+
+@use "../../assets/styles/variable.scss" as *;
+@use "../../assets/styles/mixin.scss" as *;
+
+.agentTableWrapper {
+  $popinfont: "Poppins", sans-serif;
+  margin: auto;
+  width: 80%;
+  background: white;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: visible;
+  border-radius: 2rem;
+
+  .agentTable {
+    $popinfont: "Poppins", sans-serif;
+
+    .ant-table {
+      $popinfont: "Poppins", sans-serif;
+    }
+
+    .ant-table-thead > tr > th {
+      $popinfont: "Poppins", sans-serif;
+      background-color: #f5f5f5;
+      font-weight: 600;
+      font-size: 14px;
+      color: #000;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .ant-table-tbody > tr > td {
+      $popinfont: "Poppins", sans-serif;
+      font-size: 14px;
+      color: #333;
+      padding: 12px 16px;
+    }
+
+    .ant-table-tbody > tr:nth-child(even) {
+      background-color: #fdfdfd;
+    }
+
+    .ant-pagination {
+      $popinfont: "Poppins", sans-serif;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+  }
+}
+
+.acceptBtn {
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0 16px;
+  font-weight: 500;
+  font-size: 14px;
+  $popinfont: "Poppins", sans-serif;
+
+  &:hover {
+    background-color: #16a34a;
+  }
+}
+
+.denyBtn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0 16px;
+  font-weight: 500;
+  font-size: 14px;
+  $popinfont: "Poppins", sans-serif;
+
+  &:hover {
+    background-color: #dc2626;
+  }
+}

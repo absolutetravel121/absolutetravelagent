@@ -1,0 +1,109 @@
+@use "../../assets/styles/variable.scss" as *;
+@use "../../assets/styles/mixin.scss" as *;
+
+.inquiryFormContainer {
+  width: 67%;
+  padding: 1.5rem;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+
+  .heading {
+    border-bottom: 1px solid #d9d9d9;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    $popinfont: "Poppins", sans-serif;
+  }
+
+  .inquiryForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .inputBox {
+      width: calc(50% - 0.5rem);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      $popinfont: "Poppins", sans-serif;
+
+      label {
+        white-space: nowrap;
+        width: 15rem;
+        $popinfont: "Poppins", sans-serif;
+      }
+
+      .input {
+        width: 100%;
+        background-color: #f7f7f7;
+        padding: 0.3rem;
+        $popinfont: "Poppins", sans-serif;
+      }
+      .input::placeholder {
+        color: transparent;
+      }
+    }
+
+    .buttonWrapper {
+      position: absolute;
+      bottom: 8%;
+      right: 5%;
+    }
+  }
+}
+
+@include respond("mobile") {
+  .inquiryFormContainer {
+    order: 1;
+    width: 90%;
+    margin: 1rem;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+
+    .heading {
+      border-bottom: 1px solid #d9d9d9;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .inquiryForm {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: 1rem;
+
+      .inputBox {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        label {
+          display: none;
+          white-space: nowrap;
+          width: 15rem;
+        }
+
+        .input {
+          width: 100%;
+          background-color: #f7f7f7;
+          padding: 0.3rem;
+        }
+        .input::placeholder {
+          color: #bbb;
+          padding: 0 0.5rem;
+        }
+      }
+
+      .buttonWrapper {
+        position: relative;
+        right: 0;
+
+        .btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

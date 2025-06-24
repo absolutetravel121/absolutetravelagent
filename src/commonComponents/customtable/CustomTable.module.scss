@@ -1,0 +1,85 @@
+@use "../../assets/styles/variable.scss" as *;
+@use "../../assets/styles/mixin.scss" as *;
+.agentTableWrapper {
+  $popinfont: "Poppins", sans-serif;
+  width: 100%;
+  margin: 4rem auto 2rem auto;
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  padding: 1rem 0;
+  overflow-x: auto;
+  .customTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $font-sm;
+
+    th,
+    td {
+      padding: 0.25rem 1.5rem;
+      border-bottom: 1px solid #bbb;
+      text-align: left;
+      font-weight: 500 !important;
+      $popinfont: "Poppins", sans-serif;
+    }
+
+    thead,
+    tr,
+    td {
+      border-bottom: 1px solid #ddd;
+      $popinfont: "Poppins", sans-serif;
+
+      font-weight: 400 !important;
+      &:hover {
+        background-color: #f7f7f7;
+      }
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+  }
+
+  .acceptBtn {
+    @include primaryFont;
+    background-color: #3cd13c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.95rem;
+    $popinfont: "Poppins", sans-serif;
+
+    margin-right: 1rem;
+    cursor: pointer;
+    font-weight: 400;
+
+    &:hover {
+      background-color: #16a34a;
+    }
+  }
+
+  .denyBtn {
+    @include primaryFont;
+    background-color: #ff4040;
+    font-size: 0.95rem;
+    $popinfont: "Poppins", sans-serif;
+
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    font-weight: 400;
+
+    &:hover {
+      background-color: #dc2626;
+    }
+  }
+
+  .paginationWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+}

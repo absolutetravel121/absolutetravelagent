@@ -1,0 +1,76 @@
+@use "../../assets/styles/variable.scss" as *;
+@use "../../assets/styles/mixin.scss" as *;
+.LoginDoneContainer {
+  @include flex-row;
+  // font-family: ;
+  width: 100%;
+  height: 100vh;
+  padding: 1.6rem;
+  gap: 2.5rem;
+
+  .imageContainer {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    .image {
+      padding: 1rem;
+      box-shadow: none !important;
+    }
+  }
+  .data_container {
+    @include flex-row;
+    padding: 2rem;
+    gap: 2rem;
+    width: 50%;
+    .data {
+      width: 60%;
+      .heading {
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+      .para {
+        font-size: 1rem;
+        color: black;
+      }
+    }
+  }
+}
+
+@include respond("tablet") {
+  .LoginDoneContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .imageContainer {
+      display: none;
+    }
+
+    .data_container {
+      width: 100%;
+      @include flex-col;
+      gap: 1rem;
+      flex-direction: column-reverse;
+
+      .data {
+        width: 100vw;
+        @include flex-col;
+
+        .para {
+          width: 100%;
+          padding: 0 1rem;
+          text-align: center;
+          @include flex-col;
+        }
+        .heading {
+          margin: 1rem auto;
+        }
+      }
+
+      .icon {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
+}

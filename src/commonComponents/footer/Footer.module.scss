@@ -1,0 +1,90 @@
+@use "./../../assets/styles/variable.scss" as *;
+@use "./../../assets/styles/mixin.scss" as *;
+
+.footerContainer {
+  @include flex-row;
+  width: 100%;
+  height: 100%;
+  background-color: #e6effb;
+  padding-top: 5rem;
+
+  .innerContainer {
+    $popinfont: "Poppins", sans-serif;
+    display: flex;
+    gap: 3rem;
+    flex-direction: column;
+    padding: 0rem 1rem;
+    width: 100%;
+    max-width: 76rem;
+
+    .footerLinks {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      $popinfont: "Poppins", sans-serif;
+
+      .footerPageLinks {
+        @include primaryFont;
+        cursor: pointer;
+        $popinfont: "Poppins", sans-serif;
+        font-weight: 400;
+      }
+    }
+
+    .footerInfo {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      $popinfont: "Poppins", sans-serif;
+    }
+
+    .footer_content {
+      display: flex;
+      gap: 24px;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      h2 {
+        $popinfont: "Poppins", sans-serif;
+        // @include heading;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.officeInfo {
+  text-align: center;
+  h4 {
+    @include primaryFont;
+    font-size: 1rem !important;
+    font-weight: 400;
+    $popinfont: "Poppins", sans-serif;
+  }
+}
+
+.social_images {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  gap: 12px;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.footer_contactUs {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  $popinfont: "Poppins", sans-serif;
+}
+
+.rightsText {
+  $popinfont: "Poppins", sans-serif;
+  font-weight: 400;
+  width: 100%;
+  text-align: right;
+}

@@ -1,0 +1,130 @@
+@use "../../assets/styles/variable.scss" as *;
+@use "../../assets/styles/mixin.scss" as *;
+
+.form_container {
+  @include primaryFont;
+  padding: 3rem 1rem;
+  margin: auto;
+  width: 100%;
+  max-width: 500px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .heading {
+    font-weight: 700;
+    font-size: 1.75rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    $popinfont: "Poppins", sans-serif;
+  }
+
+  .para {
+    color: black;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    $popinfont: "Poppins", sans-serif;
+  }
+
+  .formBody {
+    width: 100%;
+    font-size: 0.9rem;
+    $popinfont: "Poppins", sans-serif;
+
+    .inputBox {
+      margin-bottom: 1rem;
+      @include flex-col;
+
+      .label {
+        font-weight: 500;
+        margin-bottom: 0.35rem;
+        $popinfont: "Poppins", sans-serif;
+      }
+
+      .input {
+        padding: 0.5rem;
+        $popinfont: "Poppins", sans-serif;
+
+        &:focus {
+          box-shadow: none !important;
+          border-color: $primary;
+        }
+        &:hover {
+          border-color: $primary;
+        }
+      }
+
+      .input::placeholder {
+        padding-left: 0.5rem;
+      }
+    }
+
+    .forgotPassword {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      .checkbox {
+        font-size: $font-xs;
+        font-weight: 500;
+        $popinfont: "Poppins", sans-serif;
+      }
+
+      .link {
+        font-size: $font-xs;
+        font-weight: 400;
+        color: $primary;
+        text-decoration: none;
+        $popinfont: "Poppins", sans-serif;
+      }
+    }
+
+    .primaryBtn {
+      background-color: #f13b13 !important;
+      width: 100% !important;
+      font-weight: 500;
+      padding: 1rem 0;
+      $popinfont: "Poppins", sans-serif;
+    }
+
+    .divider {
+      margin: 1rem 0;
+    }
+
+    .secondaryBtn {
+      @include flex-row;
+      width: 100% !important;
+      color: black;
+      font-weight: 400;
+      padding: 1rem 0;
+      $popinfont: "Poppins", sans-serif;
+
+      margin-bottom: 1rem;
+      border-color: #679fe6;
+
+      .icon {
+        margin-right: 8px;
+      }
+    }
+
+    .footerLink {
+      display: flex;
+      justify-content: center;
+      gap: 0.3rem;
+      margin-top: 2rem;
+      font-weight: 500;
+      $popinfont: "Poppins", sans-serif;
+
+      .link {
+        color: $primary;
+        font-weight: 500;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// Mobile responsiveness

@@ -1,0 +1,72 @@
+@use "../../assets/styles/mixin.scss" as *;
+@use "../../assets/styles/variable.scss" as *;
+
+.navigationTab_container {
+  @include primaryFont;
+  width: 100%;
+  display: flex;
+  margin: 6rem 0 0;
+
+  .navigationTab {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap; // allow wrapping on smaller screens
+  }
+}
+
+.selectedTab {
+  @include primaryFont;
+  background-color: $primary;
+  color: white !important;
+  font-size: 0.95rem;
+  padding: 1.1rem 0.5rem;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: rgb(211, 58, 3) !important;
+    color: white !important;
+  }
+}
+
+.nonSelectedTab {
+  @include primaryFont;
+  background-color: white;
+  color: #333;
+  border: 2px solid $primary;
+  font-size: 0.95rem;
+  padding: 1rem 0.5rem;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: $primary !important;
+    color: white !important;
+  }
+}
+
+// MOBILE
+@include respond("mobile") {
+  .navigationTab_container {
+    margin: 2rem auto 0;
+    padding: 0 1rem;
+    .navigationTab {
+      overflow-x: auto;
+      white-space: nowrap;
+      gap: 0.5rem;
+      padding-bottom: 0.5rem;
+
+      // hide scrollbar (optional)
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none; // IE + Edge
+      scrollbar-width: none; // Firefox
+    }
+  }
+
+  .selectedTab,
+  .nonSelectedTab {
+    font-size: 0.85rem;
+    padding: 0.75rem 0.5rem;
+    min-width: max-content;
+  }
+}
