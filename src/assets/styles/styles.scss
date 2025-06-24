@@ -22,3 +22,11 @@
 //   color: inherit;
 //   text-decoration: none;
 // }
+
+.ant-checkbox-inner {
+  background: pink;
+}
+
+.ant-checkbox .ant-checkbox-inner {
+  background-color: rebeccapurple !important;
+}

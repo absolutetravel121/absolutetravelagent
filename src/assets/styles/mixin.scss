@@ -27,7 +27,7 @@
       @content;
     }
   } @else if $breakpoint == "tablet" {
-    @media (max-width: 900px) {
+    @media (max-width: 1439px) {
       @content;
     }
   }

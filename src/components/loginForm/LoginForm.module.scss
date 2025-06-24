@@ -42,6 +42,7 @@
       width: 100%;
       max-width: 400px;
       font-family: $popinfont !important;
+
       .forgotPassword {
         display: flex;
         justify-content: space-between;
@@ -49,10 +50,11 @@
         margin: 0.5rem 0 1.2rem 0;
         .checkbox {
           font-size: 1rem;
+          // background-color: #d9d9d9;
         }
 
         .link {
-          font-size: 1rem;
+          font-size: 0.8rem;
           font-weight: 400;
           color: $primary;
           text-decoration: none;
@@ -62,10 +64,12 @@
       .inputBox {
         @include flex-col;
         font-family: $popinfont !important;
+        margin-bottom: 0.8rem;
 
         .label {
-          font-weight: 500;
-          font-size: 1.25rem;
+          font-weight: 400;
+          font-size: 1rem;
+          margin-bottom: 0.5rem;
           font-family: $popinfont !important;
         }
 
@@ -91,12 +95,11 @@
         width: 100%;
         font-weight: 500;
         font-size: 1rem;
-        padding: 1.5rem 0;
+        padding: 1rem 0;
         font-family: $popinfont !important;
       }
 
       .divider {
-        margin: 1.5rem 0;
         font-weight: 400;
         font-size: 1rem;
         border-color: #aaa;
@@ -105,19 +108,21 @@
 
       .secondaryBtn {
         @include flex-row;
-        font-size: 1rem;
+        font-size: 0.8rem;
         width: 100%;
         font-weight: 400;
-        padding: 1.5rem 0;
+        padding: 1.2rem 0;
         margin-bottom: 1rem;
         border-color: #679fe6;
         font-family: $popinfont !important;
-        gap: 0.5rem;
+
+        .icon {
+          width: 0.1rem;
+        }
       }
 
       .footerLink {
-        display: flex;
-        justify-content: center;
+        @include flex-row;
         gap: 0.5rem;
         margin-top: 2rem;
         font-weight: 500;
@@ -134,10 +139,10 @@
   }
 }
 
-@include respond("tablet") {
+@include respond("mobile") {
   .loginFormContainer {
     flex-direction: column;
-    gap: 0;
+    height: 100vh;
 
     .imageContainer {
       display: none;
@@ -145,19 +150,18 @@
 
     .form_container {
       width: 100%;
-      height: 100vh;
-      padding: 1rem;
+      height: 100%;
+      padding: 0 1.2rem;
       @include flex-center;
-      gap: 2rem;
 
       .heading {
-        font-size: 2rem;
+        font-size: 1.5rem;
         text-align: center;
       }
 
       .para {
         font-size: 1rem;
-        padding: 0rem 0.25rem;
+        padding: 0rem 0 2rem 0;
         text-align: center;
       }
 
@@ -176,7 +180,7 @@
           }
 
           .input {
-            padding: 0.8rem 0.75rem;
+            padding: 0.4rem 0.75rem;
             &:focus {
               box-shadow: none !important;
               border-color: $primary;
@@ -190,7 +194,7 @@
           }
         }
         .forgotPassword {
-          margin: 1rem 0;
+          margin: 0.2rem 0 2rem 0;
         }
 
         .primaryBtn {

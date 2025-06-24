@@ -76,21 +76,8 @@ const LoginForm = () => {
                 <ImageWrapper
                   src={google}
                   alt="Google"
-                  width={24}
-                  height={24}
-                  style={styles.icon}
-                />
-              }
-            />
-            <SecondaryBtn
-              label={"Facebook"}
-              className={styles.secondaryBtn}
-              icon={
-                <ImageWrapper
-                  src={Facebook}
-                  alt="Facebook"
-                  width={24}
-                  height={24}
+                  width={20}
+                  height={20}
                   style={styles.icon}
                 />
               }
