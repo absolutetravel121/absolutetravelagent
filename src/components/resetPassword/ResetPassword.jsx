@@ -8,7 +8,7 @@ import PrimaryInput from "@/commonComponents/uikit/PrimaryInput";
 import PrimaryButton from "@/commonComponents/uikit/PrimaryButton";
 const ResetPassword = () => {
   return (
-    <div className={styles.forgetPasswordContainer}>
+    <div className={styles.resetPasswordContainer}>
       <div className={styles.imageContainer}>
         <ImageWrapper
           src={travelAgent2}

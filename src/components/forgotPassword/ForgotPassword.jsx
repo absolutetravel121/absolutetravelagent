@@ -32,7 +32,7 @@ const ForgotPassword = () => {
         <form action="" className={styles.formBody}>
           <div className={styles.inputBox}>
             <label htmlFor="Email" className={styles.label}>
-              Enter Registered Email{" "}
+              Enter Registered Email
             </label>
             <PrimaryInput
               placeholder={"example@gmail.com"}

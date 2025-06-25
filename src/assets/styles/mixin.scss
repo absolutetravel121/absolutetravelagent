@@ -23,11 +23,11 @@
 
 @mixin respond($breakpoint) {
   @if $breakpoint == "mobile" {
-    @media (max-width: 600px) {
+    @media (max-width: 900px) {
       @content;
     }
   } @else if $breakpoint == "tablet" {
-    @media (max-width: 1439px) {
+    @media (min-width: 901px_) and (max-width: 1440px) {
       @content;
     }
   }

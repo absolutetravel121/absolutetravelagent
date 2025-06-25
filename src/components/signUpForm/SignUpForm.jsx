@@ -80,27 +80,14 @@ const SignUpForm = () => {
           />
           <AntdDivider text={"OR"} className={styles.divider} />
           <SecondaryBtn
-            label={"Facebook"}
-            className={styles.secondaryBtn}
-            icon={
-              <ImageWrapper
-                src={Facebook}
-                alt="Facebook"
-                width={28}
-                height={28}
-                style={styles.icon}
-              />
-            }
-          />
-          <SecondaryBtn
             label={"Google"}
             className={styles.secondaryBtn}
             icon={
               <ImageWrapper
                 src={google}
                 alt="Google"
-                width={28}
-                height={28}
+                width={21}
+                height={21}
                 style={styles.icon}
               />
             }
