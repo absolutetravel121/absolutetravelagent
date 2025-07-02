@@ -11,10 +11,10 @@ import BookingList from "@/mobileResponsive/BookList";
 import { CalendarOutlined } from "@ant-design/icons";
 import React from "react";
 const tabsList = [
-  { label: "Flights", href: "/tabs/flights" },
-  { label: "Haj&Umrah", href: "/tabs/haj&umrah" },
-  { label: "Visas", href: "/tabs/visas" },
-  { label: "Hotels", href: "/tabs/hotels" },
+  { label: "Flights", href: "/flights" },
+  { label: "Haj&Umrah", href: "/haj&umrah" },
+  { label: "Visas", href: "/visas" },
+  { label: "Hotels", href: "/hotels" },
 ];
 const fieldsData = [
   { placeholder: "Name", label: "Name", suffixIcon: "" },
@@ -35,12 +35,12 @@ const fieldsData = [
 ];
 
 const page = () => {
-  const { columns, data } = TAB_CONTENT["Visas"];
+  const { columns, data } = TAB_CONTENT["Haj & Umrah"];
   const isMobile = useCheckDeviceView();
   return (
     <>
       <Header />
-      <div style={{ padding: "4rem 0rem" }}>
+      <div style={{ padding: "4rem 0" }}>
         <div style={isMobile ? { padding: "0rem" } : { padding: "0rem 8rem" }}>
           <NavigationTab tabsList={tabsList} />
           {isMobile ? (

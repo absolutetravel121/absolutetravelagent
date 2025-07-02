@@ -2,20 +2,21 @@
 import React, { useState } from "react";
 import { Pagination } from "antd";
 import styles from "./CustomTable.module.scss";
-
-const CustomTable = ({
-  columns = [],
-  data = [],
-  rowsPerPage = 5,
-  onAccept = () => {},
-  onDeny = () => {},
-}) => {
+import CustomModal from "../customModal/CustomModal";
+import handshake from "../../assets/icons/thankyou-icon.svg";
+const CustomTable = ({ columns = [], data = [], rowsPerPage = 5 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [actionModalType, setActionModalType] = useState(null);
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  const handleActionModalOpen = (type) => {
+    setActionModalType(type);
+  };
 
+  const handleActionModalClose = () => {
+    setActionModalType(null);
+  };
   const paginatedData = data.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
@@ -44,13 +45,10 @@ const CustomTable = ({
                 <td key={i}>{row[col]}</td>
               ))}
               <td>
-                <button
-                  className={styles.acceptBtn}
-                  onClick={() => onAccept(row)}
-                >
+                <button className={styles.acceptBtn} onClick={()=>handleActionModalOpen("accept")}>
                   Accept
                 </button>
-                <button className={styles.denyBtn} onClick={() => onDeny(row)}>
+                <button className={styles.denyBtn} onClick={()=>handleActionModalOpen("deny")}>
                   Deny
                 </button>
               </td>
@@ -58,6 +56,21 @@ const CustomTable = ({
           ))}
         </tbody>
       </table>
+      {actionModalType && (
+        <CustomModal
+          open={() => handleActionModalOpen(actionModalType)}
+          onCancel={handleActionModalClose}
+          title={
+            actionModalType === "accept" ? "Thank You!" : "Sorry to hear that"
+          }
+          desc={
+            actionModalType === "accept"
+              ? "Our team will contact you within 4 to 9 hrs with the payment links."
+              : "We hope you will find future deals enticing."
+          }
+          image={handshake}
+        />
+      )}
 
       <div className={styles.paginationWrapper}>
         <Pagination

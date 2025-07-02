@@ -1,6 +1,5 @@
 import travelAgent from "../../assets/images/travelAgent.png";
 import google from "../../assets/icons/google.svg";
-import Facebook from "../../assets/icons/Facebook.svg";
 import Link from "next/link";
 import styles from "./SignUpForm.module.scss";
 import HeadingText from "@/commonComponents/uikit/HeadingText";
@@ -11,8 +10,10 @@ import PrimaryButton, {
 } from "@/commonComponents/uikit/PrimaryButton";
 import AntdDivider from "@/commonComponents/uikit/AntdDivider";
 import ImageWrapper from "@/commonComponents/uikit/ImageWrapper";
+import React, { Suspense } from "react";
 const SignUpForm = () => {
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className={styles.travlePartnerContainer}>
       <div className={styles.imageContainer}>
         <ImageWrapper
@@ -102,6 +103,7 @@ const SignUpForm = () => {
         </form>
       </div>
     </div>
+    </Suspense>
   );
 };
 

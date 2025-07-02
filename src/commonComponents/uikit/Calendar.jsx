@@ -99,7 +99,7 @@
 import React from "react";
 import { Calendar } from "antd";
 import dayjs from "dayjs"; // Required for date control
-import "./CalendarWidget.scss"; // Optional styling
+// import "./CalendarWidget.scss"; // Optional styling
 
 const CalendarWidget = ({ onSelect, value = dayjs() }) => {
   // Optional: You can pass onSelect callback to get selected date

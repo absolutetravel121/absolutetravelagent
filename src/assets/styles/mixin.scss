@@ -21,14 +21,30 @@
   align-items: center;
 }
 
+// @mixin respond($breakpoint) {
+//   @if $breakpoint == "mobile" {
+//     @media (max-width: 900px) {
+//       @content;
+//     }
+//   } @else if $breakpoint == "tablet" {
+//     @media (min-width: 901px_) and (max-width: 1440px) {
+//       @content;
+//     }
+//   }
+// }
 @mixin respond($breakpoint) {
-  @if $breakpoint == "mobile" {
-    @media (max-width: 900px) {
+  @if $breakpoint == mobile {
+    @media (max-width: 767px) {
       @content;
     }
-  } @else if $breakpoint == "tablet" {
-    @media (min-width: 901px_) and (max-width: 1440px) {
+  } @else if $breakpoint == tablet {
+    @media (min-width: 768px) and (max-width: 1024px) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media (min-width: 1025px) {
       @content;
     }
   }
 }
+

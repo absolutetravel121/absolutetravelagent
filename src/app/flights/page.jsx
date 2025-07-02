@@ -10,32 +10,37 @@ import useCheckDeviceView from "@/hooks/useCheckDeviceView";
 import BookingList from "@/mobileResponsive/BookList";
 import { CalendarOutlined } from "@ant-design/icons";
 import React from "react";
+
 const tabsList = [
-  { label: "Flights", href: "/tabs/flights" },
-  { label: "Haj&Umrah", href: "/tabs/haj&umrah" },
-  { label: "Visas", href: "/tabs/visas" },
-  { label: "Hotels", href: "/tabs/hotels" },
+  { label: "Flights", href: "/flights" },
+  { label: "Haj&Umrah", href: "/haj&umrah" },
+  { label: "Visas", href: "/visas" },
+  { label: "Hotels", href: "/hotels" },
 ];
 const fieldsData = [
-  { placeholder: "Name", label: "Name", suffixIcon: "" },
+  { label: "Name", placeholder: "Name", suffixIcon: "" },
   {
-    placeholder: "Date of Birth",
     label: "Date of Birth",
+    placeholder: "Date of Birth",
     suffixIcon: <CalendarOutlined />,
   },
-  { placeholder: "From", label: "From", suffixIcon: <CalendarOutlined /> },
-  { placeholder: "Marital Status", label: "Marital Status", suffixIcon: "" },
-  { placeholder: "Destination", label: "Destination", suffixIcon: "" },
+  { label: "From", placeholder: "From", suffixIcon: "" },
+  { label: "Class", placeholder: "Class", suffixIcon: "" },
+  { label: "Destination", placeholder: "Destination", suffixIcon: "" },
   {
-    placeholder: "Purpose of visit",
     label: "Purpose of visit",
+    placeholder: "Purpose of visit",
     suffixIcon: "",
   },
-  { placeholder: "Departure Date", label: "Departure Date", suffixIcon: "" },
+  {
+    label: "Departure Date",
+    placeholder: "Departure Date",
+    suffixIcon: <CalendarOutlined />,
+  },
 ];
 
-const page = () => {
-  const { columns, data } = TAB_CONTENT["Haj & Umrah"];
+const Flights = () => {
+  const { columns, data } = TAB_CONTENT["Flights"];
   const isMobile = useCheckDeviceView();
   return (
     <>
@@ -44,7 +49,7 @@ const page = () => {
         <div style={isMobile ? { padding: "0rem" } : { padding: "0rem 8rem" }}>
           <NavigationTab tabsList={tabsList} />
           {isMobile ? (
-            <BookingList bookings={MobileTabData} />
+            <BookingList bookings={MobileTabData} style={{ order: 2 }} />
           ) : (
             <CustomTable columns={columns} data={data} />
           )}
@@ -79,4 +84,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Flights;

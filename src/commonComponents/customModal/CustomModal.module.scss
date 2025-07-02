@@ -1,0 +1,27 @@
+@import "./../../assets/styles/mixin.scss";
+@import "./../../assets/styles/variable.scss";
+.customModal {
+  width: 300px !important;
+}
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  .title {
+    font-family: $popinfont;
+    font-size: 1rem;
+    font-weight: 600;
+    padding-top: 0.5rem;
+  }
+  .image {
+    width: 100px;
+  }
+  .modalDesc {
+    font-family: $popinfont;
+
+    font-size: 0.85rem;
+    padding: 0.5rem 0;
+  }
+}

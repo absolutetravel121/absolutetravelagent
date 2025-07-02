@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import travelAgent2 from "../../assets/images/travelAgent2.png";
 import ImageWrapper from "@/commonComponents/uikit/ImageWrapper";
 import styles from "./ResetPassword.module.scss";
@@ -8,6 +8,7 @@ import PrimaryInput from "@/commonComponents/uikit/PrimaryInput";
 import PrimaryButton from "@/commonComponents/uikit/PrimaryButton";
 const ResetPassword = () => {
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className={styles.resetPasswordContainer}>
       <div className={styles.imageContainer}>
         <ImageWrapper
@@ -54,6 +55,7 @@ const ResetPassword = () => {
         </form>
       </div>
     </div>
+    </Suspense>
   );
 };
 
