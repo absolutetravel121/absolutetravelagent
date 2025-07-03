@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "animejs": "^4.0.2",
     "antd": "^5.26.1",
     "autoprefixer": "^10.4.21",
     "dayjs": "^1.11.13",

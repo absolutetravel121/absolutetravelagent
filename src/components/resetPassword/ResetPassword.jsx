@@ -1,3 +1,4 @@
+"use client";
 import React, { Suspense } from "react";
 import travelAgent2 from "../../assets/images/travelAgent2.png";
 import ImageWrapper from "@/commonComponents/uikit/ImageWrapper";
@@ -6,7 +7,13 @@ import HeadingText from "@/commonComponents/uikit/HeadingText";
 import ParaText from "@/commonComponents/uikit/ParaText";
 import PrimaryInput from "@/commonComponents/uikit/PrimaryInput";
 import PrimaryButton from "@/commonComponents/uikit/PrimaryButton";
+import { useRouter } from "next/navigation";
 const ResetPassword = () => {
+  const router=useRouter()
+  const handleConfirm = (e) => {
+    e.preventDefault();
+    router.push("/allDone");
+  };
   return (
     <Suspense fallback={<div>Loading...</div>}>
     <div className={styles.resetPasswordContainer}>
@@ -51,7 +58,7 @@ const ResetPassword = () => {
               placeholder={"Re-Enter Password"}
             />
           </div>
-          <PrimaryButton label={"Confirm"} className={styles.primaryBtn} />
+          <PrimaryButton label={"Confirm"} className={styles.primaryBtn} onClick={handleConfirm} />
         </form>
       </div>
     </div>

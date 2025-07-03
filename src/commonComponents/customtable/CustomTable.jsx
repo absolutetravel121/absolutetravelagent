@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Pagination } from "antd";
 import styles from "./CustomTable.module.scss";
 import CustomModal from "../customModal/CustomModal";
 import handshake from "../../assets/icons/thankyou-icon.svg";
+import Loading from "@/app/loading";
 const CustomTable = ({ columns = [], data = [], rowsPerPage = 5 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [actionModalType, setActionModalType] = useState(null);
@@ -23,6 +24,8 @@ const CustomTable = ({ columns = [], data = [], rowsPerPage = 5 }) => {
   );
 
   return (
+    <Suspense fallback={<Loading/>}>
+    {/* Suspense is used here to handle any lazy loading of components */}
     <div className={styles.agentTableWrapper}>
       <table className={styles.customTable}>
         <thead>
@@ -83,6 +86,7 @@ const CustomTable = ({ columns = [], data = [], rowsPerPage = 5 }) => {
         />
       </div>
     </div>
+    </Suspense>
   );
 };
 

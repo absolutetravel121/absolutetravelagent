@@ -11,23 +11,17 @@ import CheckBox from "@/commonComponents/uikit/CheckBox";
 import PrimaryButton, {
   SecondaryBtn,
 } from "@/commonComponents/uikit/PrimaryButton";
-import AntdDivider from "@/commonComponents/uikit/AntdDivider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import PrimaryDivider from "@/commonComponents/uikit/PrimaryDivider";
+import Loading from "@/app/loading";
 const LoginForm = () => {
   const router = useRouter();
-const [isLoginSuccessful,setLoginSuccessful] = useState(false);
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setLoginSuccessful(true);
-    if (isLoginSuccessful) {
-      router.push("/flights");
-    } else {
-      alert("Login failed");
-    }
+  const handleLogin = () => {
+    router.push("/flights");
   };
   return (
-    <Suspense fallback={"Loading"}>
+    <Suspense fallback={<Loading/>}>
       <div className={styles.loginFormContainer}>
         <div className={styles.imageContainer}>
           <ImageWrapper
@@ -80,7 +74,7 @@ const [isLoginSuccessful,setLoginSuccessful] = useState(false);
                 className={styles.primaryBtn}
                 onClick={handleLogin}
               />
-              <AntdDivider text={"OR"} className={styles.divider} />
+              <PrimaryDivider text={"OR"} className={styles.divider} />
               <SecondaryBtn
                 label={"Google"}
                 className={styles.secondaryBtn}

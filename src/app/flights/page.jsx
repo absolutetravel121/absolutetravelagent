@@ -9,9 +9,10 @@ import { MobileTabData, TAB_CONTENT } from "@/constants/tabData";
 import useCheckDeviceView from "@/hooks/useCheckDeviceView";
 import BookingList from "@/mobileResponsive/BookList";
 import { CalendarOutlined, SearchOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { Suspense } from "react";
 import "../../assets/styles/styles.scss";
 import PrimaryInput from "@/commonComponents/uikit/PrimaryInput";
+import Loading from "../loading";
 const tabsList = [
   { label: "Flights", href: "/flights" },
   { label: "Haj&Umrah", href: "/haj&umrah" },
@@ -19,19 +20,18 @@ const tabsList = [
   { label: "Hotels", href: "/hotels" },
 ];
 const fieldsData = [
-  { label: "Name", placeholder: "Name", suffixIcon: "" },
+  { label: "Name", placeholder: "Name"},
   {
     label: "Date of Birth",
     placeholder: "Date of Birth",
     suffixIcon: <CalendarOutlined />,
   },
-  { label: "From", placeholder: "From", suffixIcon: "" },
-  { label: "Class", placeholder: "Class", suffixIcon: "" },
-  { label: "Destination", placeholder: "Destination", suffixIcon: "" },
+  { label: "From", placeholder: "From"},
+  { label: "Class", placeholder: "Class", },
+  { label: "Destination", placeholder: "Destination", },
   {
     label: "Purpose of visit",
     placeholder: "Purpose of visit",
-    suffixIcon: "",
   },
   {
     label: "Departure Date",
@@ -44,7 +44,7 @@ const Flights = () => {
   const { columns, data } = TAB_CONTENT["Flights"];
   const isMobile = useCheckDeviceView();
   return (
-    <>
+    <Suspense fallback={<Loading/>}>
       <Header />
       <div className={`${isMobile ? "mobile-container" : "container"}`}>
         <div className={`${isMobile ? "center-y":"space-between" }`}>
@@ -52,7 +52,7 @@ const Flights = () => {
           <PrimaryInput placeholder={"Search"} suffix={<SearchOutlined className="icon"/>} className={"search-input"}/>
         </div>
         <div>
-          {isMobile ? (
+          {isMobile? (
             <BookingList bookings={MobileTabData} className={"order"} />
           ) : (
             <CustomTable columns={columns} data={data} />
@@ -77,7 +77,7 @@ const Flights = () => {
         )}
       </div>
       <Footer />
-    </>
+    </Suspense>
   );
 };
 

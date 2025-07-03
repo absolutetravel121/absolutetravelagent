@@ -5,7 +5,7 @@ const useCheckDeviceView = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 769);
+      setIsMobile(window.innerWidth <=820);
     };
 
     if (typeof window !== "undefined") {

@@ -1,9 +1,9 @@
 "use client"
 import React from "react";
 import { Divider } from "antd";
-const AntdDivider = ({ text, className }) => (
+const PrimaryDivider = ({ text, className }) => (
   <>
     <Divider className={className}>{text}</Divider>
   </>
 );
-export default AntdDivider;
+export default PrimaryDivider;

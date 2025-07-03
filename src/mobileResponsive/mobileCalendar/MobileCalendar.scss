@@ -9,7 +9,6 @@
 }
 
 .modal-container {
-  // @include heading;
   max-width: calc(100vw - 1px);
 
   .footer-container {
@@ -18,9 +17,14 @@
     display: flex;
   }
   .Donebutton {
-    // @include mobile-selectdatebutton;
+    background-color: $primary;
+    padding: 1.25rem 1.5rem;
+    font-size: 1rem;
     float: right;
-    margin: 1rem;
+    margin: 0 1rem 1rem;
+    &:hover {
+      background-color: rgb(219, 67, 11) !important;
+    }
   }
   .ant-modal-content {
     height: 100%;
@@ -46,11 +50,12 @@
 
   .ant-typography {
     margin-bottom: 0;
-    // @include heading;
+    font-size: 1.5rem;
   }
   .ant-picker-content td {
     min-width: auto;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    padding: 0.25rem 1rem;
   }
   .ant-picker-cell .ant-picker-cell-inner {
     height: 45px;
@@ -58,43 +63,111 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  
+
   }
   .ant-picker-cell-in-view.ant-picker-cell-selected:not(
        .ant-picker-cell-disabled
     )
     .ant-picker-cell-inner {
-    border-color: $primary !important; 
-    border-radius: 8px;
-    background-color:white !important ;
+    border:2px solid  $primary ;
+    background-color:white;
     color: black !important;
+  
   }
 }
 
 .moontyr_title {
   display: flex;
+  text-align: center;
   margin: 0rem 1rem 0rem 1rem;
   gap: 10px;
 }
 
-@include respond("mobile"){
-  .calendar_title {
+
+
+@include respond("mobile") {
+.calendar_title {
+  display: flex;
+  width: 328px;
+  justify-content: center;
+  gap: 31px;
+  align-items: center;
+}
+
+.modal-container {
+  max-width: calc(100vw - 1px);
+
+  .footer-container {
     width: 100%;
-    justify-content: center;
-    gap: 10px;
+    justify-content: right;
+    display: flex;
   }
-  .moontyr_title {
+  .Donebutton {
+    background-color: $primary;
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
+    float: right;
+    margin: 0 1rem 1rem;
+    &:hover {
+      background-color: rgb(219, 67, 11) !important;
+    }
+  }
+  .ant-modal-content {
+    height: 50%;
+    padding: 0;
+  }
+  .ant-modal-body {
+    height: 100%;
+  }
+}
+.calendar-container {
+  height: 100%;
+  // padding: 10px;
+  .ant-col {
+    // padding: 10px;
+    display: flex;
     width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ant-typography + h4.ant-typography {
+    margin: 0;
+  }
+
+  .ant-typography {
+    margin-bottom: 0;
+    font-size: 1.25rem;
+  }
+  .ant-picker-content td {
+    min-width: auto;
+    font-size: 1rem;
+    padding: 0.25rem 1rem;
+  }
+  .ant-picker-cell .ant-picker-cell-inner {
+    height: 35px;
+    width: 35px;
+    display: flex;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+
   }
   .ant-picker-cell-in-view.ant-picker-cell-selected:not(
        .ant-picker-cell-disabled
     )
     .ant-picker-cell-inner {
-    border-color: $primary !important; 
-    border-radius: 8px;
-    background-color:white !important ;
+    border:2px solid  $primary ;
+    background-color:white;
     color: black !important;
+  
   }
 }
+
+.moontyr_title {
+  display: flex;
+  text-align: center;
+  margin: 0rem 1rem 0rem 1rem;
+  gap: 10px;
+}
+
+
+}   

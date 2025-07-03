@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import styles from "./OffersCard.module.scss";
+import Loading from "@/app/loading";
 
 const offers = [
   "Access exclusive group pricing and early-bird deals for Haj & Umrah packages — limited-time seasonal offers available.",
@@ -8,6 +9,7 @@ const offers = [
 ];
 const OffersCard = () => {
   return (
+    <Suspense fallback={<Loading/>}>
     <div className={styles.offerCardWrapper}>
       <h3 className={styles.title}>{"Offers"}</h3>
       <div className={styles.offerList}>
@@ -19,6 +21,7 @@ const OffersCard = () => {
         ))}
       </div>
     </div>
+    </Suspense>
   );
 };
 

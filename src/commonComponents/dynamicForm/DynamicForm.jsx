@@ -6,7 +6,7 @@ import ParaText from "../uikit/ParaText";
 import HeadingText from "../uikit/HeadingText";
 import CheckBox from "../uikit/CheckBox";
 import PrimaryButton, { SecondaryBtn } from "../uikit/PrimaryButton";
-import AntdDivider from "../uikit/AntdDivider";
+import AntdDivider from "../uikit/PrimaryDivider";
 import google from "../../assets/icons/google.svg";
 import Facebook from "../../assets/icons/Facebook.svg";
 import Link from "next/link";

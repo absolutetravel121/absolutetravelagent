@@ -36,20 +36,24 @@
       .input {
         width: 100%;
         background-color: #f7f7f7;
-        padding: 0.3rem 1rem;
+        padding: 0.5rem 0.75rem;
         $popinfont: "Poppins", sans-serif;
         border-radius: 8px;
       }
       .input::placeholder {
-            padding: 0.3rem 1rem;
         color: transparent;
       }
     }
 
     .buttonWrapper {
       position: absolute;
-      bottom: 8%;
-      right: 5%;
+      padding: 1rem 1.5rem;    
+      right: 0;
+      bottom:0px;
+      .btn{
+        padding: 1rem 0.5rem;
+        border-radius: 8px;
+      }
     }
   }
 }
@@ -91,7 +95,7 @@
         .input {
           width: 100%;
           background-color: #f7f7f7;
-          padding: 0.3rem;
+          padding: 0.45rem;
           border-radius: 8px;
         }
         .input::placeholder {
@@ -103,9 +107,11 @@
       .buttonWrapper {
         position: relative;
         right: 0;
-
+        bottom: 0;
+        padding: 0;
         .btn {
           width: 100%;
+          padding: 1rem;
         }
       }
     }

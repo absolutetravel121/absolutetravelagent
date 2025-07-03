@@ -44,7 +44,6 @@ const ForgotPassword = () => {
           <PrimaryButton
             label={"Enter"}
             className={styles.primaryBtn}
-            href="./one"
           />
         </form>
       </div>

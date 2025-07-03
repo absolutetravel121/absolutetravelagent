@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import HeadingText from "../uikit/HeadingText";
 import PrimaryInput from "../uikit/PrimaryInput";
 import PrimaryButton from "../uikit/PrimaryButton";
@@ -8,6 +8,7 @@ import styles from "./DynamicInquiryForm.module.scss";
 import { CalendarOutlined } from "@ant-design/icons";
 import CustomModal from "../customModal/CustomModal";
 import MobileCalender from "@/mobileResponsive/mobileCalendar/MobileCalendar";
+import Loading from "@/app/loading";
 
 const DynamicInquiryForm = ({ heading = "New Inquiry", fields = [] }) => {
   const [formData, setFormData] = useState({});
@@ -44,6 +45,7 @@ const DynamicInquiryForm = ({ heading = "New Inquiry", fields = [] }) => {
   };
 
   return (
+    <Suspense fallback={<Loading/>}>
     <div className={styles.inquiryFormContainer}>
       <HeadingText textTitle={heading} level={5} className={styles.heading} />
       <form className={styles.inquiryForm}>
@@ -84,6 +86,8 @@ const DynamicInquiryForm = ({ heading = "New Inquiry", fields = [] }) => {
             visible={true}
             handleCloseCalendar={handleCloseCalendar}
             onSelectDate={onSelectDate}
+            disabledStartDate={false}
+
           />
         )}
 
@@ -98,6 +102,7 @@ const DynamicInquiryForm = ({ heading = "New Inquiry", fields = [] }) => {
         )}
       </form>
     </div>
+    </Suspense>
   );
 };
 

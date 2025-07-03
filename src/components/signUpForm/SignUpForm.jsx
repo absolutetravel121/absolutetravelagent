@@ -8,9 +8,10 @@ import PrimaryInput from "@/commonComponents/uikit/PrimaryInput";
 import PrimaryButton, {
   SecondaryBtn,
 } from "@/commonComponents/uikit/PrimaryButton";
-import AntdDivider from "@/commonComponents/uikit/AntdDivider";
+import AntdDivider from "@/commonComponents/uikit/PrimaryDivider";
 import ImageWrapper from "@/commonComponents/uikit/ImageWrapper";
 import React, { Suspense } from "react";
+import PrimaryDivider from "@/commonComponents/uikit/PrimaryDivider";
 const SignUpForm = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -79,7 +80,7 @@ const SignUpForm = () => {
             className={styles.primaryBtn}
             href="./login"
           />
-          <AntdDivider text={"OR"} className={styles.divider} />
+          <PrimaryDivider text={"OR"} className={styles.divider} />
           <SecondaryBtn
             label={"Google"}
             className={styles.secondaryBtn}
