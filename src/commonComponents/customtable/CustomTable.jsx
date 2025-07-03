@@ -69,6 +69,7 @@ const CustomTable = ({ columns = [], data = [], rowsPerPage = 5 }) => {
               : "We hope you will find future deals enticing."
           }
           image={handshake}
+
         />
       )}
 

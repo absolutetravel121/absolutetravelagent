@@ -3,7 +3,7 @@
 .agentTableWrapper {
   $popinfont: "Poppins", sans-serif;
   width: 100%;
-  margin: 4rem auto 2rem auto;
+  margin: 1rem auto;
   background: #fff;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
   border-radius: 20px;
@@ -82,4 +82,30 @@
     justify-content: center;
     margin-top: 1.5rem;
   }
+}
+
+
+
+@media screen and (max-width: 1024px) {
+  .agentTableWrapper {
+    width: 100%;
+    padding: 1rem;
+    margin: 0;
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+    overflow-x: auto;
+
+    .customTable {
+      th,
+      td {
+        padding: 0.5rem;
+        font-size: $font-xs;
+      }
+    }
+  }
+  .acceptBtn,
+  .denyBtn {      
+    font-size: 0.85rem;
+    padding: 0.2rem 0.4rem;
+  }   
 }

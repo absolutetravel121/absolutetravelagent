@@ -36,10 +36,12 @@
       .input {
         width: 100%;
         background-color: #f7f7f7;
-        padding: 0.3rem;
+        padding: 0.3rem 1rem;
         $popinfont: "Poppins", sans-serif;
+        border-radius: 8px;
       }
       .input::placeholder {
+            padding: 0.3rem 1rem;
         color: transparent;
       }
     }
@@ -52,11 +54,12 @@
   }
 }
 
-@include respond("mobile") {
+@media screen and (max-width: 1024px) {
   .inquiryFormContainer {
     order: 1;
-    width: 90%;
-    margin: 1rem;
+    width: 100%;
+    padding: 1rem;
+    margin: 0;
     border-radius: 20px;
     position: relative;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
@@ -89,6 +92,7 @@
           width: 100%;
           background-color: #f7f7f7;
           padding: 0.3rem;
+          border-radius: 8px;
         }
         .input::placeholder {
           color: #bbb;

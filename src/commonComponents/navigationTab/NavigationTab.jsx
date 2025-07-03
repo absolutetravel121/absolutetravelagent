@@ -19,7 +19,7 @@ const NavigationTab = ({
   };
 
   return (
-    <div className={`${styles.navigationTab_container} ${className}`}>
+    <div className={styles.navigationTab_container}>
       <div className={styles.navigationTab}>
         {tabsList.map((tab, index) => (
           <PrimaryButton
@@ -34,7 +34,7 @@ const NavigationTab = ({
           />
         ))}
       </div>
-    </div>
+     </div>
   );
 };
 

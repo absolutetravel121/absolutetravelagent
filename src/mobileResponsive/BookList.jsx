@@ -4,7 +4,7 @@ import { Pagination } from "antd";
 import styles from "./BookList.module.scss";
 import BookingCard from "./BookingCard";
 
-const BookingList = ({ bookings, style }) => {
+const BookingList = ({ bookings, style,className }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
 
@@ -12,7 +12,6 @@ const BookingList = ({ bookings, style }) => {
     setCurrentPage(page);
   };
 
-  // Calculate current page data
   const startIndex = (currentPage - 1) * pageSize;
   const currentData = bookings.slice(startIndex, startIndex + pageSize);
 

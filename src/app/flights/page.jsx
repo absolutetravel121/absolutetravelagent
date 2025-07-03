@@ -8,9 +8,10 @@ import OffersCard from "@/commonComponents/offers/OffersCard";
 import { MobileTabData, TAB_CONTENT } from "@/constants/tabData";
 import useCheckDeviceView from "@/hooks/useCheckDeviceView";
 import BookingList from "@/mobileResponsive/BookList";
-import { CalendarOutlined } from "@ant-design/icons";
+import { CalendarOutlined, SearchOutlined } from "@ant-design/icons";
 import React from "react";
-
+import "../../assets/styles/styles.scss";
+import PrimaryInput from "@/commonComponents/uikit/PrimaryInput";
 const tabsList = [
   { label: "Flights", href: "/flights" },
   { label: "Haj&Umrah", href: "/haj&umrah" },
@@ -45,24 +46,20 @@ const Flights = () => {
   return (
     <>
       <Header />
-      <div style={{ padding: "4rem 0" }}>
-        <div style={isMobile ? { padding: "0rem" } : { padding: "0rem 8rem" }}>
+      <div className={`${isMobile ? "mobile-container" : "container"}`}>
+        <div className={`${isMobile ? "center-y":"space-between" }`}>
           <NavigationTab tabsList={tabsList} />
+          <PrimaryInput placeholder={"Search"} suffix={<SearchOutlined className="icon"/>} className={"search-input"}/>
+        </div>
+        <div>
           {isMobile ? (
-            <BookingList bookings={MobileTabData} style={{ order: 2 }} />
+            <BookingList bookings={MobileTabData} className={"order"} />
           ) : (
             <CustomTable columns={columns} data={data} />
           )}
         </div>
         {isMobile ? (
-          <div
-            style={{
-              display: "flex",
-              gap: "1rem",
-              flexDirection: "column",
-              width: "100vw",
-            }}
-          >
+          <div className="center-x">
             <OffersCard />
             <DynamicInquiryForm
               heading={"New Visa Inquire"}
@@ -70,7 +67,7 @@ const Flights = () => {
             />
           </div>
         ) : (
-          <div style={{ display: "flex", gap: "1rem", padding: "1rem 8rem" }}>
+          <div className="center-x">
             <OffersCard />
             <DynamicInquiryForm
               heading={"New Visa Inquire"}

@@ -1,149 +1,56 @@
-// import React from 'react';
-// import dayjs from 'dayjs';
-// import 'dayjs/locale/zh-cn';
-// import { Calendar, Col, Radio, Row, Select, theme, Typography } from 'antd';
-// import dayLocaleData from 'dayjs/plugin/localeData';
-// dayjs.extend(dayLocaleData);
-// const Calendar = () => {
-//    const wrapperStyle = {
-//     width: 300,
-//     border: `1px solid ${token.colorBorderSecondary}`,
-//     borderRadius: token.borderRadiusLG,
+
+
+
+
+
+// import React from "react";
+// import { Calendar } from "antd";
+// import dayjs from "dayjs"; // Required for date control
+// // import "./CalendarWidget.scss"; // Optional styling
+
+// const CalendarWidget = ({ onSelect, value = dayjs() }) => {
+//   // Optional: You can pass onSelect callback to get selected date
+//   const handlePanelChange = (date, mode) => {
+//     console.log("Changed to:", date.format("YYYY-MM-DD"), "Mode:", mode);
 //   };
+
+//   const headerRender = ({ value, type, onChange, onTypeChange }) => {
+//     const current = value.clone();
+
+//     const selectYear = (offset) => {
+//       const newDate = current.add(offset, "year");
+//       onChange(newDate);
+//     };
+
+//     const selectMonth = (offset) => {
+//       const newDate = current.add(offset, "month");
+//       onChange(newDate);
+//     };
+
+//     return (
+//       <div className="calendar-header">
+//         <div className="calendar-nav">
+//           <button onClick={() => selectYear(-1)}>«</button>
+//           <button onClick={() => selectMonth(-1)}>‹</button>
+//           <span>{current.format("MMMM YYYY")}</span>
+//           <button onClick={() => selectMonth(1)}>›</button>
+//           <button onClick={() => selectYear(1)}>»</button>
+//         </div>
+//       </div>
+//     );
+//   };
+
 //   return (
-//     <div style={wrapperStyle}>
+//     <div className="calendar-wrapper">
 //       <Calendar
 //         fullscreen={false}
-//         headerRender={({ value, type, onChange, onTypeChange }) => {
-//           const start = 0;
-//           const end = 12;
-//           const monthOptions = [];
-//           let current = value.clone();
-//           const localeData = value.localeData();
-//           const months = [];
-//           for (let i = 0; i < 12; i++) {
-//             current = current.month(i);
-//             months.push(localeData.monthsShort(current));
-//           }
-//           for (let i = start; i < end; i++) {
-//             monthOptions.push(
-//               <Select.Option key={i} value={i} className="month-item">
-//                 {months[i]}
-//               </Select.Option>,
-//             );
-//           }
-//           const year = value.year();
-//           const month = value.month();
-//           const options = [];
-//           for (let i = year - 10; i < year + 10; i += 1) {
-//             options.push(
-//               <Select.Option key={i} value={i} className="year-item">
-//                 {i}
-//               </Select.Option>,
-//             );
-//           }
-//           return (
-//             <div style={{ padding: 8 }}>
-//               <Typography.Title level={4}>Custom header</Typography.Title>
-//               <Row gutter={8}>
-//                 <Col>
-//                   <Radio.Group
-//                     size="small"
-//                     onChange={e => onTypeChange(e.target.value)}
-//                     value={type}
-//                   >
-//                     <Radio.Button value="month">Month</Radio.Button>
-//                     <Radio.Button value="year">Year</Radio.Button>
-//                   </Radio.Group>
-//                 </Col>
-//                 <Col>
-//                   <Select
-//                     size="small"
-//                     popupMatchSelectWidth={false}
-//                     className="my-year-select"
-//                     value={year}
-//                     onChange={newYear => {
-//                       const now = value.clone().year(newYear);
-//                       onChange(now);
-//                     }}
-//                   >
-//                     {options}
-//                   </Select>
-//                 </Col>
-//                 <Col>
-//                   <Select
-//                     size="small"
-//                     popupMatchSelectWidth={false}
-//                     value={month}
-//                     onChange={newMonth => {
-//                       const now = value.clone().month(newMonth);
-//                       onChange(now);
-//                     }}
-//                   >
-//                     {monthOptions}
-//                   </Select>
-//                 </Col>
-//               </Row>
-//             </div>
-//           );
-//         }}
-//         onPanelChange={onPanelChange}
+//         value={value}
+//         onSelect={onSelect}
+//         onPanelChange={handlePanelChange}
+//         headerRender={headerRender}
 //       />
 //     </div>
 //   );
 // };
-// export default Calendar;
 
-
-
-import React from "react";
-import { Calendar } from "antd";
-import dayjs from "dayjs"; // Required for date control
-// import "./CalendarWidget.scss"; // Optional styling
-
-const CalendarWidget = ({ onSelect, value = dayjs() }) => {
-  // Optional: You can pass onSelect callback to get selected date
-  const handlePanelChange = (date, mode) => {
-    console.log("Changed to:", date.format("YYYY-MM-DD"), "Mode:", mode);
-  };
-
-  const headerRender = ({ value, type, onChange, onTypeChange }) => {
-    const current = value.clone();
-
-    const selectYear = (offset) => {
-      const newDate = current.add(offset, "year");
-      onChange(newDate);
-    };
-
-    const selectMonth = (offset) => {
-      const newDate = current.add(offset, "month");
-      onChange(newDate);
-    };
-
-    return (
-      <div className="calendar-header">
-        <div className="calendar-nav">
-          <button onClick={() => selectYear(-1)}>«</button>
-          <button onClick={() => selectMonth(-1)}>‹</button>
-          <span>{current.format("MMMM YYYY")}</span>
-          <button onClick={() => selectMonth(1)}>›</button>
-          <button onClick={() => selectYear(1)}>»</button>
-        </div>
-      </div>
-    );
-  };
-
-  return (
-    <div className="calendar-wrapper">
-      <Calendar
-        fullscreen={false}
-        value={value}
-        onSelect={onSelect}
-        onPanelChange={handlePanelChange}
-        headerRender={headerRender}
-      />
-    </div>
-  );
-};
-
-export default CalendarWidget;
+// export default CalendarWidget;

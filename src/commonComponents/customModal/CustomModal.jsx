@@ -5,7 +5,7 @@ import styles from "./CustomModal.module.scss";
 import ImageWrapper from "../uikit/ImageWrapper";
 import HeadingText from "../uikit/HeadingText";
 
-const CustomModal = ({ open, onCancel, title, image, desc }) => {
+const CustomModal = ({ open, onCancel, title, image, desc,alt }) => {
   return (
     <Modal
       open={open}
