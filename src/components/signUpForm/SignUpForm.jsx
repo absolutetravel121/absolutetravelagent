@@ -12,9 +12,10 @@ import AntdDivider from "@/commonComponents/uikit/PrimaryDivider";
 import ImageWrapper from "@/commonComponents/uikit/ImageWrapper";
 import React, { Suspense } from "react";
 import PrimaryDivider from "@/commonComponents/uikit/PrimaryDivider";
+import Loading from "@/app/loading";
 const SignUpForm = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading/>}>
     <div className={styles.travlePartnerContainer}>
       <div className={styles.imageContainer}>
         <ImageWrapper

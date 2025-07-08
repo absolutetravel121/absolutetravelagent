@@ -1,37 +1,31 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import anime from "animejs";
+import { animate } from "animejs";     
 import ImageWrapper from "./ImageWrapper";
+
 const SplashScreen = ({ finishLoading }) => {
   const [isMounted, setIsMounted] = useState(false);
 
- useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsMounted(true);
+  useEffect(() => {
+    setIsMounted(true);
 
-      anime({
-        targets: "#logo",
-        scale: [0.8, 1.2, 1],
-        duration: 1000,
-        easing: "easeInOutQuad",
-        complete: () => {
-          setTimeout(() => {
-            finishLoading();
-          }, 500);
-        },
-      });
-    }, 300);
-
-    return () => clearTimeout(timeout);
+    animate("#logo", {
+      scale: [0.8, 1.2, 1],          
+      duration: 1000,
+      ease: "inOutQuad",      
+    }).then(() => {
+      
+      setTimeout(() => finishLoading(), 500);
+    });
   }, [finishLoading]);
 
   return (
-    <div className="splashScreen" isMounted={isMounted}>
+    <div className={`splashScreen ${isMounted ? "mounted" : ""}`}>
       <ImageWrapper
-        priority={true}
+        priority
         id="logo"
         src="/splashLogo.gif"
-        alt=""
+        alt="App logo"
         width={60}
         height={60}
       />
