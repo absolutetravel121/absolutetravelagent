@@ -12,12 +12,14 @@ import { CalendarOutlined, SearchOutlined } from "@ant-design/icons";
 import React from "react";
 import "../../assets/styles/styles.scss";
 import PrimaryInput from "@/commonComponents/uikit/PrimaryInput";
+
 const tabsList = [
   { label: "Flights", href: "/flights" },
   { label: "Haj&Umrah", href: "/haj&umrah" },
   { label: "Visas", href: "/visas" },
   { label: "Hotels", href: "/hotels" },
 ];
+
 const fieldsData = [
   { placeholder: "Name", label: "Name", suffixIcon: "" },
   {
