@@ -33,7 +33,7 @@ const LoginForm = () => {
         </div>
         <div className={styles.form_container}>
           <HeadingText
-            textTitle={"Welcome, Travel Partners! Ayush Maheshwari"}
+            textTitle={"Welcome, Travel Partners!"}
             level={2}
             className={styles.heading}
           />
