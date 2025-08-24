@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import styles from "./Footer.module.scss";
-import linkedin from "../../assets/Icons/linkedin.svg";
+import linkedin from "../../assets/icons/linkedin.svg";
 // import facebook from "../../assets/Icons/facebookIcon.svg";
-import whatsapp from "../../assets/Icons/whatsapp.svg";
-import phone from "../../assets/Icons/phone.svg";
-import mail from "../../assets/Icons/mail.svg";
+import whatsapp from "../../assets/icons/whatsapp.svg";
+import phone from "../../assets/icons/phone.svg";
+import mail from "../../assets/icons/mail.svg";
 import { usePathname, useRouter } from "next/navigation";
 import HeadingText from "../uikit/HeadingText";
 import ImageWrapper from "../uikit/ImageWrapper";

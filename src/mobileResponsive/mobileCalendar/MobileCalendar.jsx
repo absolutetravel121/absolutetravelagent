@@ -13,7 +13,7 @@ import {
 } from "antd";
 import ImageWrapper from "@/commonComponents/uikit/ImageWrapper";
 import PrimaryButton from "@/commonComponents/uikit/PrimaryButton";
-import leftmove from "../../assets/Icons/chevron-left.svg";
+import leftmove from "../../assets/icons/chevron-left.svg";
 import chevrondown from "../../assets/icons/chevron-down.svg";
 import chevronright from "../../assets/icons/chevron-right.svg";
 import "./MobileCalendar.scss";
