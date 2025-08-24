@@ -30,7 +30,7 @@ const Footer = () => {
             onClick={() => push("/about")}
             className={styles.footerPageLinks}
           >
-            About Us
+            About US
           </span>
           <span
             onClick={() => push("/jobopening")}
