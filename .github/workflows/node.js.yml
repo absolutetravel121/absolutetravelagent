@@ -1,29 +1,22 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
+name: Deploy to VPS via Webhook
 
 on:
   push:
-    branches: [ "development" ]
+    branches:
+      - development
 
 jobs:
-  build:
-
-    runs-on: self-hosted
-
-    strategy:
-      matrix:
-        node-version: [20.15.0]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+  trigger-deploy:
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: pm2 restart 5
+    - name: Call VPS Webhook
+      run: |
+        PAYLOAD='{"ref":"refs/heads/development"}'
+        SIGNATURE="sha256=$(echo -n $PAYLOAD | openssl dgst -sha256 -hmac "${{ secrets.WEBHOOK_SECRET }}" | sed 's/^.* //')"
+
+        curl -X POST \
+          -H "Content-Type: application/json" \
+          -H "X-Hub-Signature-256: $SIGNATURE" \
+          --data "$PAYLOAD" \
+          http://69.62.75.137:9000/webhook
