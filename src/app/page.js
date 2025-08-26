@@ -2,7 +2,7 @@ import AgentRegisterationForm from "@/components/AgentRegisterationForm/AgentReg
  export default function Home() {
   return (
     <>
-      <AgentRegisterationForm />
+      < AgentRegisterationForm/>
     </>
   );
 }
