@@ -1,3 +1,4 @@
+# .github/workflows/node.js.yml
 name: Deploy to VPS via Webhook
 
 on:
@@ -16,6 +17,7 @@ jobs:
         SIGNATURE="sha256=$(echo -n $PAYLOAD | openssl dgst -sha256 -hmac "${{ secrets.WEBHOOK_SECRET }}" | sed 's/^.* //')"
 
         curl -X POST \
+          --fail \                # ⬅️ ye add karo
           -H "Content-Type: application/json" \
           -H "X-Hub-Signature-256: $SIGNATURE" \
           --data "$PAYLOAD" \
