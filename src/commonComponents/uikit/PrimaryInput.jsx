@@ -1,8 +1,6 @@
 import React from "react";
 import { Input } from "antd";
 
- 
-
 const PrimaryInput = ({
   placeholder,
   className,
@@ -13,26 +11,25 @@ const PrimaryInput = ({
   prefix,
   suffix,
   onClick,
-  name,  
+  name,
 }) => {
   return (
     <Input
       placeholder={placeholder}
       className={className}
-      onChange={(e) => onChange({ target: { ...e.target, name } })}  
+      onChange={(e) => onChange(e)}
       onClick={onClick}
       type={type}
       value={value}
       prefix={prefix}
       suffix={suffix}
       disabled={disable}
-      name={name}  
+      name={name}
     />
   );
 };
 
 export default PrimaryInput;
-
 
 export const SearchInput = ({
   placeholder,
@@ -46,7 +43,11 @@ export const SearchInput = ({
 }) => {
   return (
     <>
-      <Input.Search placeholder="Filled" variant="filled" className={className}/>
+      <Input.Search
+        placeholder="Filled"
+        variant="filled"
+        className={className}
+      />
     </>
   );
 };
