@@ -1,12 +1,12 @@
  "use client";
 import React, { Suspense, useState } from "react";
-import styles from "./LoginForm.module.scss";
+import styles from "./AgentRegisterationForm.module.scss";
 import HeadingText from "@/commonComponents/uikit/HeadingText";
 import ParaText from "@/commonComponents/uikit/ParaText";
 import PrimaryInput from "@/commonComponents/uikit/PrimaryInput";
 import Loading from "@/app/loading";
 
-const LoginForm = () => {
+const AgentRegisterationForm = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     mobile: "",
@@ -100,7 +100,7 @@ const LoginForm = () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <div className={styles.loginFormContainer}>
+      <div className={styles.AgentRegisterationForm}>
         <div className={styles.form_container}>
           <HeadingText
             textTitle={"Welcome, Absolute Travel Partners"}
@@ -315,4 +315,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default AgentRegisterationForm;

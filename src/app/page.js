@@ -1,8 +1,8 @@
-import LoginForm from "@/components/loginForm/LoginForm";
-export default function Home() {
+import AgentRegisterationForm from "@/components/AgentRegisterationForm/AgentRegisterationForm";
+ export default function Home() {
   return (
     <>
-      <LoginForm />
+      <AgentRegisterationForm />
     </>
   );
 }
