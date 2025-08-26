@@ -1,23 +1,29 @@
-# .github/workflows/node.js.yml
-name: Deploy to VPS via Webhook
+name: Deploy Project to VPS
 
 on:
+  workflow_dispatch: # Manual trigger (optional)
+    inputs:
+      project:
+        description: 'Project to deploy (backend/frontend/agent/admin)'
+        required: true
+        default: 'agent'
   push:
     branches:
       - development
 
 jobs:
-  trigger-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Call VPS Webhook
+    - name: Trigger Deployment on VPS
       run: |
-        PAYLOAD='{"ref":"refs/heads/development"}'
+        PROJECT="${{ github.event.inputs.project || 'backend' }}"
+        PAYLOAD="{\"ref\":\"refs/heads/development\",\"project\":\"$PROJECT\"}"
         SIGNATURE="sha256=$(echo -n $PAYLOAD | openssl dgst -sha256 -hmac "${{ secrets.WEBHOOK_SECRET }}" | sed 's/^.* //')"
 
+        echo "🚀 Deploying $PROJECT..."
         curl -X POST \
-          --fail \                # ⬅️ ye add karo
+          --fail \
           -H "Content-Type: application/json" \
           -H "X-Hub-Signature-256: $SIGNATURE" \
           --data "$PAYLOAD" \
