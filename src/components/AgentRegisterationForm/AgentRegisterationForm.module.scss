@@ -6,7 +6,7 @@
     display: flex;
     padding: 1rem 0;
     justify-content: center;
-
+margin-top: 5rem;
     .imageContainer {
         width: 33%;
         height: 100vh;
@@ -139,6 +139,7 @@
 /* Responsive */
 @include respond("mobile") {
     .AgentRegisterationForm {
+        margin-top: 3rem;
         flex-direction: column;
 
         .imageContainer {

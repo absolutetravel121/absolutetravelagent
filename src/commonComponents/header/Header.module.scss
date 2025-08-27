@@ -21,14 +21,30 @@
   .header_menu {
     @include flex-row;
     gap: 3rem;
+    
   }
 
+  
   .headermenu_text {
-    font-size: 1.3rem !important;
+    font-size: 1rem !important;
     font-weight: 500;
     cursor: pointer;
   }
+  .primaryButton {
+  @include primaryFont;
+  background-color: $primary;
+  color: white !important;
+  font-size: 0.95rem;
+  padding: 1.1rem 0.5rem;
+  white-space: nowrap;
+  border-radius: 8px;
+  &:hover {
+    background-color: rgb(211, 58, 3) !important;
+    color: white !important;
+  }
 }
+}
+
 
 @media screen and (max-width: 820px) {
   .headerContainer {
