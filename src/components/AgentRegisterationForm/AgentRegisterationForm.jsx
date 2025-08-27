@@ -237,13 +237,13 @@ const AgentRegisterationForm = () => {
               value={formData.city}
               onChange={handleChange}
             />
-            <PrimaryInput
+            {/* <PrimaryInput
               type="text"
               placeholder="Main Products"
               name="mainProducts"
               value={formData.mainProducts}
               onChange={handleChange}
-            />
+            /> */}
 
             {/* Seasonal Availability */}
             <label>Seasonal Availability</label>
