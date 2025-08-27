@@ -1,10 +1,12 @@
- "use client";
+"use client";
 import React, { Suspense, useState } from "react";
 import styles from "./AgentRegisterationForm.module.scss";
 import HeadingText from "@/commonComponents/uikit/HeadingText";
 import ParaText from "@/commonComponents/uikit/ParaText";
 import PrimaryInput from "@/commonComponents/uikit/PrimaryInput";
 import Loading from "@/app/loading";
+import { message } from "antd";
+import { publicRequest } from "@/utils/axios-utils";
 
 const AgentRegisterationForm = () => {
   const [formData, setFormData] = useState({
@@ -35,30 +37,28 @@ const AgentRegisterationForm = () => {
     setFormData((prev) => ({
       ...prev,
       [name]:
-        type === "checkbox"
-          ? checked
-          : type === "file"
-          ? files[0]
-          : value,
+        type === "checkbox" ? checked : type === "file" ? files[0] : value,
     }));
   };
 
   // Category dropdown select
   const handleCategoryChange = (e) => {
-    const values = Array.from(e.target.selectedOptions, (option) => option.value);
+    const values = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
     setSelectedCategories(values);
 
     // Remove descriptions of unselected categories
     setCategoryDescriptions((prev) => {
       const updated = {};
       values.forEach((cat) => {
-        updated[cat] = prev[cat] || ""; // keep old if exists
+        updated[cat] = prev[cat] || "";
       });
       return updated;
     });
   };
 
-  // Description input per category
   const handleCategoryDescriptionChange = (cat, value) => {
     setCategoryDescriptions((prev) => ({
       ...prev,
@@ -66,7 +66,6 @@ const AgentRegisterationForm = () => {
     }));
   };
 
-  // Seasonal Availability
   const handleSeasonalChange = (e) => {
     const { value, checked } = e.target;
     setFormData((prev) => {
@@ -78,7 +77,7 @@ const AgentRegisterationForm = () => {
   };
 
   // Submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.fullName || !formData.mobile || !formData.email) {
@@ -94,8 +93,19 @@ const AgentRegisterationForm = () => {
       })),
     };
 
-    console.log("Form Submitted:", submissionData);
-    // TODO: API call
+    try {
+      const response = await publicRequest({
+        method: "post",
+        url: "/agents/register",
+        data: submissionData,
+      });
+
+      console.log(response.data.message, "response");
+      message.success(response.data.message);
+    } catch (error) {
+      message.error(error.response.data.message);
+      console.log(error);
+    }
   };
 
   return (
@@ -193,9 +203,7 @@ const AgentRegisterationForm = () => {
             {/* Extra Inputs for each selected category */}
             {selectedCategories.map((cat) => (
               <div key={cat} className={styles.categoryDetails}>
-                <label>
-                  Describe your {cat} offerings
-                </label>
+                <label>Describe your {cat} offerings</label>
                 <textarea
                   className={styles.textarea}
                   placeholder={`Enter details for ${cat} (e.g. Fruits → Apples, Mangoes)`}
