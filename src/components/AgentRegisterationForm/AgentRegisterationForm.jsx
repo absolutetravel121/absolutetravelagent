@@ -102,6 +102,26 @@ const AgentRegisterationForm = () => {
 
       console.log(response.data.message, "response");
       message.success(response.data.message);
+      setFormData({
+        fullName: "",
+        mobile: "",
+        email: "",
+        address: "",
+        businessName: "",
+        gstNumber: "",
+        experience: "",
+        state: "",
+        city: "",
+        mainProducts: "",
+        seasonalAvailability: [],
+        supplyCapacity: "",
+        idProof: null,
+        license: null,
+        agreement: false,
+      });
+
+      setSelectedCategories([]);
+      setCategoryDescriptions({});
     } catch (error) {
       message.error(error.response.data.message);
       console.log(error);
@@ -237,13 +257,13 @@ const AgentRegisterationForm = () => {
               value={formData.city}
               onChange={handleChange}
             />
-            {/* <PrimaryInput
+            <PrimaryInput
               type="text"
               placeholder="Main Products"
               name="mainProducts"
               value={formData.mainProducts}
               onChange={handleChange}
-            /> */}
+            />
 
             {/* Seasonal Availability */}
             <label>Seasonal Availability</label>
