@@ -12,6 +12,7 @@ const PrimaryInput = ({
   suffix,
   onClick,
   name,
+  maxLength
 }) => {
   return (
     <Input
@@ -25,6 +26,7 @@ const PrimaryInput = ({
       suffix={suffix}
       disabled={disable}
       name={name}
+      maxLength={maxLength}
     />
   );
 };

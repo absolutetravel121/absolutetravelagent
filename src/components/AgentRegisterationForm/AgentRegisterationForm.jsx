@@ -27,30 +27,35 @@ const AgentRegisterationForm = () => {
     agreement: false,
   });
 
-  // Categories state
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [categoryDescriptions, setCategoryDescriptions] = useState({}); // extra detail per category
+  const [categoryDescriptions, setCategoryDescriptions] = useState({});  
 
-  // Handle inputs
-  const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]:
-        type === "checkbox" ? checked : type === "file" ? files[0] : value,
-    }));
-  };
+ const handleChange = (e) => {
+  const { name, value, type, checked, files } = e.target;
 
-  // Category dropdown select
-  const handleCategoryChange = (e) => {
+  let newValue;
+  if (type === "checkbox") {
+    newValue = checked;
+  } else if (type === "file") {
+    newValue = files && files.length > 0 ? files[0] : null;
+  } else {
+    newValue = value;
+  }
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: newValue,
+  }));
+};
+
+   const handleCategoryChange = (e) => {
     const values = Array.from(
       e.target.selectedOptions,
       (option) => option.value
     );
     setSelectedCategories(values);
 
-    // Remove descriptions of unselected categories
-    setCategoryDescriptions((prev) => {
+     setCategoryDescriptions((prev) => {
       const updated = {};
       values.forEach((cat) => {
         updated[cat] = prev[cat] || "";
@@ -76,57 +81,126 @@ const AgentRegisterationForm = () => {
     });
   };
 
-  // Submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+// const handleSubmit = async (e) => {
+//     e.preventDefault();
 
-    if (!formData.fullName || !formData.mobile || !formData.email) {
-      alert("Please fill in all required fields.");
-      return;
-    }
+//     if (!formData.fullName || !formData.mobile || !formData.email) {
+//       alert("Please fill in all required fields.");
+//       return;
+//     }
 
-    const submissionData = {
-      ...formData,
-      categories: selectedCategories.map((cat) => ({
-        name: cat,
-        description: categoryDescriptions[cat] || "",
-      })),
-    };
+//     const submissionData = {
+//       ...formData,
+//       categories: selectedCategories.map((cat) => ({
+//         name: cat,
+//         description: categoryDescriptions[cat] || "",
+//       })),
+//     };
+//     console.log(submissionData,"submissionData")
+//     try {
+//       const response = await publicRequest({
+//         method: "post",
+//         url: "/agents/register",
+//         data: submissionData,
+//       });
 
-    try {
-      const response = await publicRequest({
-        method: "post",
-        url: "/agents/register",
-        data: submissionData,
-      });
+//       console.log(response.data.message, "response");
+//       message.success(response.data.message);
+//       setFormData({
+//         fullName: "",
+//         mobile: "",
+//         email: "",
+//         address: "",
+//         businessName: "",
+//         gstNumber: "",
+//         experience: "",
+//         state: "",
+//         city: "",
+//         mainProducts: "",
+//         seasonalAvailability: [],
+//         supplyCapacity: "",
+//         idProof: null,
+//         license: null,
+//         agreement: false,
+//       });
 
-      console.log(response.data.message, "response");
-      message.success(response.data.message);
-      setFormData({
-        fullName: "",
-        mobile: "",
-        email: "",
-        address: "",
-        businessName: "",
-        gstNumber: "",
-        experience: "",
-        state: "",
-        city: "",
-        mainProducts: "",
-        seasonalAvailability: [],
-        supplyCapacity: "",
-        idProof: null,
-        license: null,
-        agreement: false,
-      });
+//       setSelectedCategories([]);
+//       setCategoryDescriptions({});
+//     } catch (error) {
+//       message.error(error.response.data.message);
+//       console.log(error);
+//     }
+//   };
+ 
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      setSelectedCategories([]);
-      setCategoryDescriptions({});
-    } catch (error) {
-      message.error(error.response.data.message);
-      console.log(error);
-    }
-  };
+  if (!formData.fullName || !formData.mobile || !formData.email) {
+    alert("Please fill in all required fields.");
+    return;
+  }
+
+  try {
+     const submissionData = new FormData();
+
+     Object.keys(formData).forEach((key) => {
+      if (key === "idProof" || key === "license") {
+        if (formData[key]) {
+          submissionData.append(key, formData[key]); // file append
+        }
+      } else if (Array.isArray(formData[key])) {
+        formData[key].forEach((item) => submissionData.append(`${key}[]`, item));
+      } else {
+        submissionData.append(key, formData[key]);
+      }
+    });
+
+     selectedCategories.forEach((cat, idx) => {
+      submissionData.append(`categories[${idx}][name]`, cat);
+      submissionData.append(
+        `categories[${idx}][description]`,
+        categoryDescriptions[cat] || ""
+      );
+    });
+
+    const response = await publicRequest({
+      method: "post",
+      url: "/agents/register",
+      data: submissionData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    message.success(response.data.message);
+
+    // Reset form
+    setFormData({
+      fullName: "",
+      mobile: "",
+      email: "",
+      address: "",
+      businessName: "",
+      gstNumber: "",
+      experience: "",
+      state: "",
+      city: "",
+      mainProducts: "",
+      seasonalAvailability: [],
+      supplyCapacity: "",
+      idProof: null,
+      license: null,
+      agreement: false,
+    });
+
+    setSelectedCategories([]);
+    setCategoryDescriptions({});
+  } catch (error) {
+    message.error(error.response?.data?.message || "Something went wrong");
+    console.error(error);
+  }
+};
+
 
   return (
     <Suspense fallback={<Loading />}>
@@ -161,6 +235,7 @@ const AgentRegisterationForm = () => {
               value={formData.mobile}
               onChange={handleChange}
               required
+              maxLength={10}
             />
             <PrimaryInput
               type="email"
@@ -226,7 +301,7 @@ const AgentRegisterationForm = () => {
                 <label>Describe your {cat} offerings</label>
                 <textarea
                   className={styles.textarea}
-                  placeholder={`Enter details for ${cat} (e.g. Fruits → Apples, Mangoes)`}
+                  placeholder={`Enter details for ${cat}`}
                   value={categoryDescriptions[cat] || ""}
                   onChange={(e) =>
                     handleCategoryDescriptionChange(cat, e.target.value)
@@ -265,8 +340,7 @@ const AgentRegisterationForm = () => {
               onChange={handleChange}
             />
 
-            {/* Seasonal Availability */}
-            <label>Seasonal Availability</label>
+             <label>Seasonal Availability</label>
             <div className={styles.checkboxGroup}>
               <label>
                 <input
@@ -305,8 +379,7 @@ const AgentRegisterationForm = () => {
               onChange={handleChange}
             />
 
-            {/* File Upload */}
-            <label>ID Proof (Aadhar / PAN)</label>
+             <label>ID Proof (Aadhar / PAN)</label>
             <input
               type="file"
               name="idProof"
@@ -322,8 +395,7 @@ const AgentRegisterationForm = () => {
               onChange={handleChange}
             />
 
-            {/* Agreement */}
-            <label className={styles.agreement}>
+             <label className={styles.agreement}>
               <input
                 type="checkbox"
                 name="agreement"
