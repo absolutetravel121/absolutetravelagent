@@ -1,12 +1,13 @@
 "use client";
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useRef, useState } from "react";
 import styles from "./AgentRegisterationForm.module.scss";
 import HeadingText from "@/commonComponents/uikit/HeadingText";
 import ParaText from "@/commonComponents/uikit/ParaText";
 import PrimaryInput from "@/commonComponents/uikit/PrimaryInput";
 import Loading from "@/app/loading";
-import { message } from "antd";
+import { message, Spin } from "antd";
 import { publicRequest } from "@/utils/axios-utils";
+import { states } from "@/constants/StateData";
 
 const AgentRegisterationForm = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ const AgentRegisterationForm = () => {
     state: "",
     city: "",
     mainProducts: "",
-    seasonalAvailability: "",  
+    seasonalAvailability: "",
     supplyCapacity: "",
     idProof: null,
     license: null,
@@ -30,6 +31,21 @@ const AgentRegisterationForm = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categoryDescriptions, setCategoryDescriptions] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const [loader, setLoader] = useState(false);
+  const idProofRef = useRef(null);
+  const licenseRef = useRef(null);
+
+  const categoriesList = [
+    "Bus",
+    "Taxi",
+    "Hotel",
+    "Fruits",
+    "Spices",
+    "Handicrafts",
+    "Beverages",
+    "Dry Fruits",
+    "Others",
+  ];
 
   const validationRules = {
     fullName: (v) => (!v.trim() ? "Full Name is required" : ""),
@@ -54,26 +70,40 @@ const AgentRegisterationForm = () => {
 
   const validateField = (name, value) => {
     if (validationRules[name]) {
-      setFormErrors((prev) => ({ ...prev, [name]: validationRules[name](value) }));
+      setFormErrors((prev) => ({
+        ...prev,
+        [name]: validationRules[name](value),
+      }));
     }
   };
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
-    let newValue = type === "checkbox" ? checked : type === "file" ? files[0] : value;
+    let newValue =
+      type === "checkbox" ? checked : type === "file" ? files[0] : value;
     setFormData((prev) => ({ ...prev, [name]: newValue }));
     validateField(name, newValue);
   };
 
-  const handleCategoryChange = (e) => {
-    const values = Array.from(e.target.selectedOptions, (option) => option.value);
-    setSelectedCategories(values);
-    setCategoryDescriptions((prev) => {
-      const updated = {};
-      values.forEach((cat) => {
-        updated[cat] = prev[cat] || "";
-      });
-      return updated;
+  const handleCategoryToggle = (cat) => {
+    setSelectedCategories((prev) => {
+      if (prev.includes(cat)) {
+        const updated = prev.filter((c) => c !== cat);
+
+         if (cat === "Fruits") {
+          setFormData((prevData) => ({
+            ...prevData,
+            seasonalAvailability: "",
+            supplyCapacity: "",
+          }));
+        }
+
+        const { [cat]: _, ...rest } = categoryDescriptions;
+        setCategoryDescriptions(rest);
+        return updated;
+      } else {
+        return [...prev, cat];
+      }
     });
   };
 
@@ -91,7 +121,9 @@ const AgentRegisterationForm = () => {
       newErrors[key] = error;
     });
     setFormErrors(newErrors);
-    if (hasError) return message.error("Please fix the errors before submitting");
+    if (hasError)
+      return message.error("Please fix the errors before submitting");
+    setLoader(true);
 
     try {
       const submissionData = new FormData();
@@ -105,7 +137,10 @@ const AgentRegisterationForm = () => {
 
       selectedCategories.forEach((cat, idx) => {
         submissionData.append(`categories[${idx}][name]`, cat);
-        submissionData.append(`categories[${idx}][description]`, categoryDescriptions[cat] || "");
+        submissionData.append(
+          `categories[${idx}][description]`,
+          categoryDescriptions[cat] || ""
+        );
       });
 
       const response = await publicRequest({
@@ -116,7 +151,7 @@ const AgentRegisterationForm = () => {
       });
 
       message.success(response.data.message);
-
+      setLoader(false);
       setFormData({
         fullName: "",
         mobile: "",
@@ -137,9 +172,12 @@ const AgentRegisterationForm = () => {
       setSelectedCategories([]);
       setCategoryDescriptions({});
       setFormErrors({});
+      if (idProofRef.current) idProofRef.current.value = null;
+      if (licenseRef.current) licenseRef.current.value = null;
     } catch (error) {
       message.error(error.response?.data?.message || "Something went wrong");
       console.error(error);
+      setLoader(false);
     }
   };
 
@@ -147,7 +185,11 @@ const AgentRegisterationForm = () => {
     <Suspense fallback={<Loading />}>
       <div className={styles.AgentRegisterationForm}>
         <div className={styles.form_container}>
-          <HeadingText textTitle="Welcome, Absolute Travel Partners" level={2} className={styles.heading} />
+          <HeadingText
+            textTitle="Welcome, Absolute Travel Partners"
+            level={2}
+            className={styles.heading}
+          />
           <ParaText
             text="Manage Travel & Tours and expand into State Specialties – Fruits, Spices, Handicrafts & More. One platform, endless opportunities."
             className={styles.para}
@@ -155,36 +197,87 @@ const AgentRegisterationForm = () => {
 
           <form onSubmit={handleSubmit} className={styles.agentFormContainer}>
             <h2>Register as an Agent</h2>
+            <PrimaryInput
+              type="text"
+              placeholder="Full Name"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+            />
+            {formErrors.fullName && (
+              <span className={styles.error}>{formErrors.fullName}</span>
+            )}
 
-            <PrimaryInput type="text" placeholder="Full Name" name="fullName" value={formData.fullName} onChange={handleChange} />
-            {formErrors.fullName && <span className={styles.error}>{formErrors.fullName}</span>}
+            <PrimaryInput
+              type="text"
+              placeholder="Mobile Number"
+              name="mobile"
+              value={formData.mobile}
+              onChange={handleChange}
+              maxLength={10}
+            />
+            {formErrors.mobile && (
+              <span className={styles.error}>{formErrors.mobile}</span>
+            )}
 
-            <PrimaryInput type="text" placeholder="Mobile Number" name="mobile" value={formData.mobile} onChange={handleChange} maxLength={10} />
-            {formErrors.mobile && <span className={styles.error}>{formErrors.mobile}</span>}
+            <PrimaryInput
+              type="email"
+              placeholder="Email ID"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            {formErrors.email && (
+              <span className={styles.error}>{formErrors.email}</span>
+            )}
 
-            <PrimaryInput type="email" placeholder="Email ID" name="email" value={formData.email} onChange={handleChange} />
-            {formErrors.email && <span className={styles.error}>{formErrors.email}</span>}
+            <PrimaryInput
+              type="text"
+              placeholder="Address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+            />
+            {formErrors.address && (
+              <span className={styles.error}>{formErrors.address}</span>
+            )}
 
-            <PrimaryInput type="text" placeholder="Address" name="address" value={formData.address} onChange={handleChange} />
-            {formErrors.address && <span className={styles.error}>{formErrors.address}</span>}
+            <PrimaryInput
+              type="text"
+              placeholder="Business / Shop Name"
+              name="businessName"
+              value={formData.businessName}
+              onChange={handleChange}
+            />
+            <PrimaryInput
+              type="text"
+              placeholder="GST Number (optional)"
+              name="gstNumber"
+              value={formData.gstNumber}
+              onChange={handleChange}
+            />
+            <PrimaryInput
+              type="text"
+              placeholder="Years of Experience"
+              name="experience"
+              value={formData.experience}
+              onChange={handleChange}
+            />
 
-            <PrimaryInput type="text" placeholder="Business / Shop Name" name="businessName" value={formData.businessName} onChange={handleChange} />
-            <PrimaryInput type="text" placeholder="GST Number (optional)" name="gstNumber" value={formData.gstNumber} onChange={handleChange} />
-            <PrimaryInput type="text" placeholder="Years of Experience" name="experience" value={formData.experience} onChange={handleChange} />
-
-            {/* Category Dropdown */}
-            <label>Category Selection</label>
-            <select multiple className={styles.selectInput} value={selectedCategories} onChange={handleCategoryChange}>
-              <option value="Bus">Bus</option>
-              <option value="Taxi">Taxi</option>
-              <option value="Hotel">Hotel</option>
-              <option value="fruits">Fruits</option>
-              <option value="spices">Spices</option>
-              <option value="handicrafts">Handicrafts</option>
-              <option value="beverages">Beverages</option>
-              <option value="dryFruits">Dry Fruits</option>
-              <option value="others">Others</option>
-            </select>
+            <label>Select Categories (You can select multiple)</label>
+            <div className={styles.checkboxGroup}>
+              {categoriesList.map((cat) => (
+                <label key={cat}>
+                  <input
+                    type="checkbox"
+                    value={cat}
+                    checked={selectedCategories.includes(cat)}
+                    onChange={() => handleCategoryToggle(cat)}
+                  />
+                  {cat}
+                </label>
+              ))}
+            </div>
 
             {selectedCategories.map((cat) => (
               <div key={cat} className={styles.categoryDetails}>
@@ -193,59 +286,122 @@ const AgentRegisterationForm = () => {
                   className={styles.textarea}
                   placeholder={`Enter details for ${cat}`}
                   value={categoryDescriptions[cat] || ""}
-                  onChange={(e) => handleCategoryDescriptionChange(cat, e.target.value)}
+                  onChange={(e) =>
+                    handleCategoryDescriptionChange(cat, e.target.value)
+                  }
                 />
               </div>
             ))}
 
-            {/* State & City */}
+             {selectedCategories.includes("Fruits") && (
+              <>
+                <label>Seasonal Availability</label>
+                <div className={styles.checkboxGroup}>
+                  {["summer", "winter", "allYear"].map((season) => (
+                    <label key={season}>
+                      <input
+                        type="radio"
+                        name="seasonalAvailability"
+                        value={season}
+                        checked={formData.seasonalAvailability === season}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            seasonalAvailability: e.target.value,
+                          }))
+                        }
+                      />
+                      {season.charAt(0).toUpperCase() + season.slice(1)}
+                    </label>
+                  ))}
+                </div>
+
+                <PrimaryInput
+                  type="text"
+                  placeholder="Approx. Supply Capacity (per month eg 50kg/month)"
+                  name="supplyCapacity"
+                  value={formData.supplyCapacity}
+                  onChange={handleChange}
+  
+                />
+              </>
+            )}
+
             <label>State</label>
-            <select className={styles.selectInput} name="state" value={formData.state} onChange={handleChange}>
+            <select
+              className={styles.selectInput}
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+            >
               <option value="">Select State</option>
-              <option value="kashmir">Kashmir</option>
-              <option value="maharashtra">Maharashtra</option>
-              <option value="rajasthan">Rajasthan</option>
-              <option value="assam">Assam</option>
-            </select>
-            {formErrors.state && <span className={styles.error}>{formErrors.state}</span>}
-
-            <PrimaryInput type="text" placeholder="City / District" name="city" value={formData.city} onChange={handleChange} />
-            {formErrors.city && <span className={styles.error}>{formErrors.city}</span>}
-
-            <PrimaryInput type="text" placeholder="Main Products" name="mainProducts" value={formData.mainProducts} onChange={handleChange} />
-
-            {/* Seasonal Availability as radio */}
-            <label>Seasonal Availability</label>
-            <div className={styles.checkboxGroup}>
-              {["summer", "winter", "allYear"].map((season) => (
-                <label key={season}>
-                  <input
-                    type="radio"
-                    name="seasonalAvailability"
-                    value={season}
-                    checked={formData.seasonalAvailability === season}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, seasonalAvailability: e.target.value }))}
-                  />
-                  {season.charAt(0).toUpperCase() + season.slice(1)}
-                </label>
+              {states.map((state, index) => (
+                <option key={index} value={state}>
+                  {state}
+                </option>
               ))}
-            </div>
+            </select>
 
-            <PrimaryInput type="number" placeholder="Approx. Supply Capacity (per month)" name="supplyCapacity" value={formData.supplyCapacity} onChange={handleChange} />
+            {formErrors.state && (
+              <span className={styles.error}>{formErrors.state}</span>
+            )}
+
+            <PrimaryInput
+              type="text"
+              placeholder="City / District"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+            />
+            {formErrors.city && (
+              <span className={styles.error}>{formErrors.city}</span>
+            )}
+
+            <PrimaryInput
+              type="text"
+              placeholder="Main Products"
+              name="mainProducts"
+              value={formData.mainProducts}
+              onChange={handleChange}
+            />
 
             <label>ID Proof (Aadhar / PAN)</label>
-            <input type="file" name="idProof" className={styles.fileInput} onChange={handleChange} />
-            {formErrors.idProof && <span className={styles.error}>{formErrors.idProof}</span>}
+            <input
+              type="file"
+              name="idProof"
+              className={styles.fileInput}
+              onChange={handleChange}
+              ref={idProofRef}
+            />
+            {formErrors.idProof && (
+              <span className={styles.error}>{formErrors.idProof}</span>
+            )}
 
             <label>Business License / GST Certificate (optional)</label>
-            <input type="file" name="license" className={styles.fileInput} onChange={handleChange} />
+            <input
+              type="file"
+              name="license"
+              className={styles.fileInput}
+              onChange={handleChange}
+              ref={licenseRef}
+            />
 
             <label className={styles.agreement}>
-              <input type="checkbox" name="agreement" checked={formData.agreement} onChange={handleChange} /> I agree to the terms & conditions of Absolute Travel marketplace.
+              <input
+                type="checkbox"
+                name="agreement"
+                checked={formData.agreement}
+                onChange={handleChange}
+              />{" "}
+              I agree to the terms & conditions of Absolute Travel marketplace.
             </label>
-            {formErrors.agreement && <span className={styles.error}>{formErrors.agreement}</span>}
+            {formErrors.agreement && (
+              <span className={styles.error}>{formErrors.agreement}</span>
+            )}
 
-            <button type="submit" className={styles.submitBtn}>Register as Agent</button>
+            <button type="submit" className={styles.submitBtn}>
+              {loader ? <Spin size="small" /> : "Register as Agent"}
+            </button>
           </form>
         </div>
       </div>
