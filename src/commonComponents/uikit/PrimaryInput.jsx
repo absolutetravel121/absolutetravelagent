@@ -27,6 +27,7 @@ const PrimaryInput = ({
       disabled={disable}
       name={name}
       maxLength={maxLength}
+    
     />
   );
 };
