@@ -359,7 +359,7 @@ const AgentRegisterationForm = () => {
 
             <PrimaryInput
               type="text"
-              placeholder="Main Products"
+              placeholder="Main Products (optional)"
               name="mainProducts"
               value={formData.mainProducts}
               onChange={handleChange}
