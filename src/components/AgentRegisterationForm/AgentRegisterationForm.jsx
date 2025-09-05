@@ -44,6 +44,7 @@ const AgentRegisterationForm = () => {
     "Handicrafts",
     "Beverages",
     "Dry Fruits",
+    "Adventure Activities ( Camping, Trekking, Rafting )",
     "Others",
   ];
 
