@@ -197,7 +197,7 @@ const AgentRegisterationForm = () => {
           />
 
           <form onSubmit={handleSubmit} className={styles.agentFormContainer}>
-            <h2>Register as an Agent</h2>
+            <h2>Register as an Agent !</h2>
             <PrimaryInput
               type="text"
               placeholder="Full Name"
