@@ -1,180 +1,114 @@
-@use "../../assets/styles/variable.scss" as *;
+ @use "../../assets/styles/variable.scss" as *;
 @use "../../assets/styles/mixin.scss" as *;
- 
 
 .loginFormContainer {
+  @include flex-center;
+  min-height: 100vh;
+  background: $background;
+}
+
+.form_container {
+  background: #fff;
+  padding: $padding-lg;
+  border-radius: $radius-xl;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.08);
+  max-width: 420px;
   width: 100%;
-  display: flex;
-  padding: 1rem 0;
-  justify-content: center;
+  text-align: center;
+}
 
-  .imageContainer {
-    width: 33%;
-    height: 100vh;
-    position: relative;
+.heading {
+  @include primaryFont;
+  font-size: $font-xl;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: $margin-xs;
+}
 
-    .image {
-      padding: 1rem;
-    }
-  }
+.para {
+  @include primaryFont;
+  font-size: $font-sm;
+  color: #666;
+  margin-bottom: $margin-md;
+}
 
-  .form_container {
+.agentFormContainer {
+  @include flex-col;
+  gap: 1rem;
+
+  h2 {
     @include primaryFont;
-    width: 67%;
-    @include flex-center;
-    padding: 0 2rem;
+    font-size: $font-lg;
+    font-weight: 600;
+    margin-bottom: $margin-xs;
+    color: #333333;
+  }
 
-    .heading {
-      font-weight: 600;
-      font-size: 1.75rem;
-      text-align: center;
-      font-family: $popinfont !important;
-    }
+  /* ✅ Global input styles scoped inside this form */
+  :global(input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="number"],
+  textarea,
+  select) {
+    width: 100%;
+    padding: $padding-sm;
+    border: 1px solid #ddd;
+    border-radius: $radius-md;
+    outline: none;
+    font-size: $font-md;
+    transition: all 0.2s ease;
+    font-family: $popinfont;
 
-    .para {
-      color: #1f1e1e;
-      font-size: 1.1rem;
-      text-align: center;
-      font-weight: 400;
-      padding: 0 4rem;
-      margin-bottom: 2rem;
-      font-family: $popinfont !important;
-    }
-
-    /* Agent Form Container */
-    .agentFormContainer {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      font-family: $popinfont !important;
-
-      h2 {
-        text-align: center;
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-        font-weight: 600;
-      }
-
-      label {
-        font-weight: 500;
-        margin-bottom: 0.4rem;
-        display: block;
-      }
-
-      input[type="text"],
-      input[type="email"],
-      input[type="number"],
-      input[type="file"],
-      select,
-      .PrimaryInput {
-        width: 100%;
-        padding: 0.6rem 0.8rem;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        font-family: $popinfont !important;
-        font-size: 1rem;
-
-        &:focus {
-          outline: none;
-          border-color: $primary;
-          box-shadow: 0 0 3px rgba($primary, 0.3);
-        }
-      }
-
-      select[multiple] {
-        height: auto;
-        min-height: 120px;
-      }
-
-      /* Seasonal Availability Checkboxes */
-      div {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 0.8rem;
-
-        label {
-          display: flex;
-          align-items: center;
-          font-weight: 400;
-          gap: 0.3rem;
-
-          input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-          }
-        }
-      }
-
-      /* Terms & Agreement */
-      label input[type="checkbox"] {
-        margin-right: 0.5rem;
-        width: 16px;
-        height: 16px;
-      }
-
-      /* Submit Button */
-      .submitBtn {
-        background-color: $primary;
-        color: #fff;
-        border: none;
-        padding: 1rem;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: 0.3s all ease;
-
-        &:hover {
-          background-color: darken($primary, 5%);
-        }
-      }
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0px 0px 0px 2px rgba($primary, 0.2);
     }
   }
 }
 
-/* Responsive */
-@include respond("mobile") {
-  .loginFormContainer {
-    flex-direction: column;
+.submitBtn {
+  background: $primary;
+  color: #fff;
+  border: none;
+  padding: $padding-sm;
+  border-radius: $radius-10;
+  font-size: $font-md;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
 
-    .imageContainer {
-      display: none;
-    }
+  &:hover {
+    background: darken($primary, 10%);
+  }
+}
 
-    .form_container {
-      width: 100%;
-      padding: 2rem 1rem;
+.extraLinks {
+  margin-top: $margin-sm;
+  display: flex;
+  justify-content: space-between;
+  font-size: $font-sm;
 
-      .para {
-        padding: 0 1rem;
-        font-size: 0.9rem;
-      }
+  a {
+    color: $primary;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
 
-      .agentFormContainer {
-        max-width: 100%;
-      }
+    &:hover {
+      color: darken($primary, 15%);
     }
   }
 }
 
-@include respond("tablet") {
-  .loginFormContainer {
-    flex-direction: column;
+/* Responsive tweaks */
+@include respond(mobile) {
+  .form_container {
+    padding: $padding-md;
+    max-width: 90%;
+  }
 
-    .imageContainer {
-      display: none;
-    }
-
-    .form_container {
-      width: 100%;
-      padding: 3rem 1rem;
-
-      .agentFormContainer {
-        max-width: 80%;
-      }
-    }
+  .heading {
+    font-size: $font-lg;
   }
 }

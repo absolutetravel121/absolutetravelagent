@@ -20,6 +20,24 @@
   justify-content: center;
   align-items: center;
 }
+
+
+@mixin button-style($bg, $hover) {
+  background: $bg;
+  color: $white;
+  border: none;
+  padding: 0.9rem;
+  border-radius: $radius-md + 2;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: $hover;
+  }
+}
+
 @mixin respond($breakpoint) {
   @if $breakpoint == mobile {
     @media (max-width: 767px) {

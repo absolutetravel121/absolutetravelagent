@@ -1,4 +1,4 @@
- "use client";
+"use client";
 import headerlogo from "./../../assets/icons/headerlogo.svg";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -26,6 +26,10 @@ const Header = () => {
 
   const modalClose = () => {
     setOpenLoginForm(false);
+  };
+
+  const handleLoginAgent = () => {
+    push("/login");
   };
 
   return (
@@ -59,25 +63,28 @@ const Header = () => {
             );
           })}
 
-           <span
+          <span
             className={`${styles.headermenu_text} cursor-pointer`}
             onClick={openLogin}
           >
-            Already Registered? <PrimaryButton className={styles.primaryButton}label={'Login'}/>
+            Already Registered?{" "}
+            <PrimaryButton
+              className={styles.primaryButton}
+              label={"Login"}
+              onClick={handleLoginAgent}
+            />
           </span>
         </div>
       </div>
 
-      {/* Modal Example (You can replace with your own modal component) */}
-      {openLoginForm && (
+       {openLoginForm && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
             <button onClick={modalClose} className={styles.closeBtn}>
               ✕
             </button>
             <h2>Login Form</h2>
-            {/* Yaha aap apna LoginForm component import karke rakh sakte ho */}
-          </div>
+           </div>
         </div>
       )}
     </>

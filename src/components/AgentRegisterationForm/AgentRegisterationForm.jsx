@@ -123,7 +123,7 @@ const AgentRegisterationForm = () => {
     });
     setFormErrors(newErrors);
     if (hasError)
-      return message.error("Please fix the errors before submitting");
+    return message.error("Please fix the errors before submitting");
     setLoader(true);
 
     try {
@@ -182,6 +182,7 @@ const AgentRegisterationForm = () => {
     }
   };
 
+ 
   return (
     <Suspense fallback={<Loading />}>
       <div className={styles.AgentRegisterationForm}>
