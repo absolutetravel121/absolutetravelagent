@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useRef, useState } from "react";
+import React, { Suspense, useRef, useState, useMemo, useEffect } from "react";
 import styles from "./AgentRegisterationForm.module.scss";
 import HeadingText from "@/commonComponents/uikit/HeadingText";
 import ParaText from "@/commonComponents/uikit/ParaText";
@@ -26,6 +26,7 @@ const AgentRegisterationForm = () => {
     idProof: null,
     license: null,
     agreement: false,
+    agentType: "",
   });
 
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -35,18 +36,36 @@ const AgentRegisterationForm = () => {
   const idProofRef = useRef(null);
   const licenseRef = useRef(null);
 
-  const categoriesList = [
+
+  useEffect(() => {
+  console.log("FINAL AGENT TYPE STATE:", formData.agentType);
+}, [formData.agentType]);
+
+  // Category groups
+  const travelCategories = [
     "Bus",
     "Taxi",
     "Hotel",
+    "Travel Packages",
+    "Adventure Activities ( Camping, Trekking, Rafting )",
+  ];
+
+  const productCategories = [
     "Fruits",
     "Spices",
     "Handicrafts",
     "Beverages",
     "Dry Fruits",
-    "Adventure Activities ( Camping, Trekking, Rafting )",
-    "Others",
   ];
+
+  // Dynamic categories list based on agent type
+  const categoriesList = useMemo(() => {
+    if (formData.agentType === "travel") return travelCategories;
+    if (formData.agentType === "items") return productCategories;
+    if (formData.agentType === "both")
+      return [...travelCategories, ...productCategories];
+    return [];
+  }, [formData.agentType]);
 
   const validationRules = {
     fullName: (v) => (!v.trim() ? "Full Name is required" : ""),
@@ -65,8 +84,9 @@ const AgentRegisterationForm = () => {
     address: (v) => (!v.trim() ? "Address is required" : ""),
     state: (v) => (!v.trim() ? "State is required" : ""),
     city: (v) => (!v.trim() ? "City / District is required" : ""),
-    agreement: (v) => (!v ? "You must agree to the terms & conditions" : ""),
     idProof: (v) => (!v ? "Please upload ID Proof (Aadhar / PAN)" : ""),
+    agentType: (v) => (!v ? "Please select agent type" : ""),
+    agreement: (v) => (!v ? "You must agree to the terms & conditions" : ""),
   };
 
   const validateField = (name, value) => {
@@ -84,21 +104,17 @@ const AgentRegisterationForm = () => {
       type === "checkbox" ? checked : type === "file" ? files[0] : value;
     setFormData((prev) => ({ ...prev, [name]: newValue }));
     validateField(name, newValue);
+     // Reset category selections if agentType changes
+    if (name === "agentType") {
+      setSelectedCategories([]);
+      setCategoryDescriptions({});
+    }
   };
 
   const handleCategoryToggle = (cat) => {
     setSelectedCategories((prev) => {
       if (prev.includes(cat)) {
         const updated = prev.filter((c) => c !== cat);
-
-         if (cat === "Fruits") {
-          setFormData((prevData) => ({
-            ...prevData,
-            seasonalAvailability: "",
-            supplyCapacity: "",
-          }));
-        }
-
         const { [cat]: _, ...rest } = categoryDescriptions;
         setCategoryDescriptions(rest);
         return updated;
@@ -112,77 +128,93 @@ const AgentRegisterationForm = () => {
     setCategoryDescriptions((prev) => ({ ...prev, [cat]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let hasError = false;
-    const newErrors = {};
-    Object.keys(validationRules).forEach((key) => {
-      const error = validationRules[key](formData[key]);
-      if (error) hasError = true;
-      newErrors[key] = error;
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  let hasError = false;
+  const newErrors = {};
+
+  Object.keys(validationRules).forEach((key) => {
+    const error = validationRules[key](formData[key]);
+    if (error) hasError = true;
+    newErrors[key] = error;
+  });
+
+  setFormErrors(newErrors);
+  if (hasError) return message.error("Please fix the errors before submitting");
+  setLoader(true);
+
+  try {
+    const submissionData = new FormData();
+
+     Object.keys(formData).forEach((key) => {
+      if (key === "idProof" || key === "license") {
+        if (formData[key]) submissionData.append(key, formData[key]);
+      } 
+      else if (key !== "agentType") {  
+         submissionData.append(key, formData[key]);
+      }
     });
-    setFormErrors(newErrors);
-    if (hasError)
-    return message.error("Please fix the errors before submitting");
-    setLoader(true);
 
-    try {
-      const submissionData = new FormData();
-      Object.keys(formData).forEach((key) => {
-        if (key === "idProof" || key === "license") {
-          if (formData[key]) submissionData.append(key, formData[key]);
-        } else {
-          submissionData.append(key, formData[key]);
-        }
-      });
-
-      selectedCategories.forEach((cat, idx) => {
-        submissionData.append(`categories[${idx}][name]`, cat);
-        submissionData.append(
-          `categories[${idx}][description]`,
-          categoryDescriptions[cat] || ""
-        );
-      });
-
-      const response = await publicRequest({
-        method: "post",
-        url: "/agents/register",
-        data: submissionData,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      message.success(response.data.message);
-      setLoader(false);
-      setFormData({
-        fullName: "",
-        mobile: "",
-        email: "",
-        address: "",
-        businessName: "",
-        gstNumber: "",
-        experience: "",
-        state: "",
-        city: "",
-        mainProducts: "",
-        seasonalAvailability: "",
-        supplyCapacity: "",
-        idProof: null,
-        license: null,
-        agreement: false,
-      });
-      setSelectedCategories([]);
-      setCategoryDescriptions({});
-      setFormErrors({});
-      if (idProofRef.current) idProofRef.current.value = null;
-      if (licenseRef.current) licenseRef.current.value = null;
-    } catch (error) {
-      message.error(error.response?.data?.message || "Something went wrong");
-      console.error(error);
-      setLoader(false);
+     if (formData.agentType === "both") {
+      submissionData.append("agentTypes[0]", "travel");
+      submissionData.append("agentTypes[1]", "items");
+    } else {
+      submissionData.append("agentTypes[0]", formData.agentType);
     }
-  };
 
- 
+     selectedCategories.forEach((cat, idx) => {
+      submissionData.append(`categories[${idx}][name]`, cat);
+      submissionData.append(
+        `categories[${idx}][description]`,
+        categoryDescriptions[cat] || ""
+      );
+    });
+
+     const response = await publicRequest({
+      method: "post",
+      url: "/agents/register",
+      data: submissionData,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    message.success(response.data.message);
+    setLoader(false);
+
+    //  
+    setFormData({
+      fullName: "",
+      mobile: "",
+      email: "",
+      address: "",
+      businessName: "",
+      gstNumber: "",
+      experience: "",
+      state: "",
+      city: "",
+      mainProducts: "",
+      seasonalAvailability: "",
+      supplyCapacity: "",
+      idProof: null,
+      license: null,
+      agreement: false,
+      agentType: "",
+    });
+
+    setSelectedCategories([]);
+    setCategoryDescriptions({});
+    setFormErrors({});
+
+    if (idProofRef.current) idProofRef.current.value = null;
+    if (licenseRef.current) licenseRef.current.value = null;
+
+  } catch (error) {
+    message.error(error.response?.data?.message || "Something went wrong");
+    console.error(error);
+    setLoader(false);
+  }
+};
+
+
   return (
     <Suspense fallback={<Loading />}>
       <div className={styles.AgentRegisterationForm}>
@@ -199,6 +231,25 @@ const AgentRegisterationForm = () => {
 
           <form onSubmit={handleSubmit} className={styles.agentFormContainer}>
             <h2>Register as an Agent !</h2>
+
+            {/* Agent Type */}
+            <label>Agent Type</label>
+            <select
+              name="agentType"
+              className={styles.selectInput}
+              value={formData.agentType}
+              onChange={handleChange}
+            >
+              <option value="">Select Agent Type</option>
+              <option value="travel">Travel Agent</option>
+              <option value="items">Product / Items Agent</option>
+              <option value="both">Both</option>
+            </select>
+            {formErrors.agentType && (
+              <span className={styles.error}>{formErrors.agentType}</span>
+            )}
+
+            {/* Full Name */}
             <PrimaryInput
               type="text"
               placeholder="Full Name"
@@ -210,6 +261,7 @@ const AgentRegisterationForm = () => {
               <span className={styles.error}>{formErrors.fullName}</span>
             )}
 
+            {/* Mobile */}
             <PrimaryInput
               type="text"
               placeholder="Mobile Number"
@@ -222,6 +274,7 @@ const AgentRegisterationForm = () => {
               <span className={styles.error}>{formErrors.mobile}</span>
             )}
 
+            {/* Email */}
             <PrimaryInput
               type="email"
               placeholder="Email ID"
@@ -233,6 +286,7 @@ const AgentRegisterationForm = () => {
               <span className={styles.error}>{formErrors.email}</span>
             )}
 
+            {/* Address */}
             <PrimaryInput
               type="text"
               placeholder="Address"
@@ -266,21 +320,26 @@ const AgentRegisterationForm = () => {
               onChange={handleChange}
             />
 
-            <label>Select Categories (You can select multiple)</label>
-            <div className={styles.checkboxGroup}>
-              {categoriesList.map((cat) => (
-                <label key={cat}>
-                  <input
-                    type="checkbox"
-                    value={cat}
-                    checked={selectedCategories.includes(cat)}
-                    onChange={() => handleCategoryToggle(cat)}
-                  />
-                  {cat}
-                </label>
-              ))}
-            </div>
+            {/* Dynamic Categories */}
+            {categoriesList.length > 0 && (
+              <>
+                <label>Select Categories</label>
+                <div className={styles.checkboxGroup}>
+                  {categoriesList.map((cat) => (
+                    <label key={cat}>
+                      <input
+                        type="checkbox"
+                        checked={selectedCategories.includes(cat)}
+                        onChange={() => handleCategoryToggle(cat)}
+                      />
+                      {cat}
+                    </label>
+                  ))}
+                </div>
+              </>
+            )}
 
+            {/* Category Descriptions */}
             {selectedCategories.map((cat) => (
               <div key={cat} className={styles.categoryDetails}>
                 <label>Describe your {cat} offerings</label>
@@ -295,7 +354,8 @@ const AgentRegisterationForm = () => {
               </div>
             ))}
 
-             {selectedCategories.includes("Fruits") && (
+            {/* Fruits special fields */}
+            {selectedCategories.includes("Fruits") && (
               <>
                 <label>Seasonal Availability</label>
                 <div className={styles.checkboxGroup}>
@@ -320,15 +380,15 @@ const AgentRegisterationForm = () => {
 
                 <PrimaryInput
                   type="text"
-                  placeholder="Approx. Supply Capacity (per month eg 50kg/month)"
+                  placeholder="Approx. Supply Capacity (e.g. 50kg/month)"
                   name="supplyCapacity"
                   value={formData.supplyCapacity}
                   onChange={handleChange}
-  
                 />
               </>
             )}
 
+            {/* State */}
             <label>State</label>
             <select
               className={styles.selectInput}
@@ -343,11 +403,11 @@ const AgentRegisterationForm = () => {
                 </option>
               ))}
             </select>
-
             {formErrors.state && (
               <span className={styles.error}>{formErrors.state}</span>
             )}
 
+            {/* City */}
             <PrimaryInput
               type="text"
               placeholder="City / District"
@@ -367,6 +427,7 @@ const AgentRegisterationForm = () => {
               onChange={handleChange}
             />
 
+            {/* File Uploads */}
             <label>ID Proof (Aadhar / PAN)</label>
             <input
               type="file"
@@ -388,7 +449,7 @@ const AgentRegisterationForm = () => {
               ref={licenseRef}
             />
 
-            <label className={styles.agreement}>
+             <label className={styles.agreement}>
               <input
                 type="checkbox"
                 name="agreement"
@@ -401,7 +462,7 @@ const AgentRegisterationForm = () => {
               <span className={styles.error}>{formErrors.agreement}</span>
             )}
 
-            <button type="submit" className={styles.submitBtn}>
+             <button type="submit" className={styles.submitBtn}>
               {loader ? <Spin size="small" /> : "Register as Agent"}
             </button>
           </form>

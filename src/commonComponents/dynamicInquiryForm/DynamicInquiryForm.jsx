@@ -47,7 +47,7 @@ const DynamicInquiryForm = ({ heading = "New Inquiry", fields = [] }) => {
   return (
     <Suspense fallback={<Loading/>}>
     <div className={styles.inquiryFormContainer}>
-      <HeadingText textTitle={heading} level={5} className={styles.heading} />
+      <HeadingText textTitle={heading} level={5}   className={styles.heading} />
       <form className={styles.inquiryForm}>
         {fields.map(({ label, type, suffixIcon, placeholder }) => (
           <div key={label} className={styles.inputBox}>
